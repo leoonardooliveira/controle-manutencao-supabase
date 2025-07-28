@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - São Geraldo Service</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        /* Estilos CSS internos - você pode transferir para seu style.css se preferir */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0083c8 0%, #005d95 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 30px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Alinha o conteúdo verticalmente ao centro */
+            align-items: center; /* Centraliza horizontalmente */
+            margin: 0;
+        }
+        .login-container {
+            background-color: #fff; /* Alterado para branco puro, como na imagem */
+            padding: 30px; /* Reduzido o padding para dar mais espaço à logo */
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+            /* margin-top removido, pois a logo agora estará DENTRO do container */
+        }
+        /* Removido .login-container h1 e .subtitulo pois o texto será substituído pela logo */
+
+        .login-container label { /* Adicionado para garantir o alinhamento do label */
+            display: block;
+            margin: 10px 0 5px;
+            color: #555; /* Cor mais escura para o texto dentro da caixa branca */
+            font-weight: bold;
+            text-align: left;
+        }
+        .login-container input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #222; /* Cor de texto mais escura para inputs */
+            background-color: #f8f8f8; /* Fundo levemente cinza para inputs */
+        }
+        .login-container button {
+            background-color: #007bff; /* Azul padrão, pode mudar para o verde da sua marca se quiser */
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
+        .login-container button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .login-container .error {
+            color: red;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .logo-login {
+            max-width: 250px; /* Aumentado para preencher mais o espaço da caixa */
+            height: auto; /* Mantém a proporção */
+            margin: 0 auto 25px auto; /* Centraliza horizontalmente e adiciona espaço abaixo */
+            display: block; /* Garante que 'margin: auto' funcione */
+        }
+        /* Removidos estilos globais do h1 e h2 que afetavam o login, já que não serão mais texto */
+        h1, h2 {
+            /* Se você tiver outros h1/h2 em outras páginas, considere mover
+               estes estilos para um CSS específico do login ou usar IDs mais específicos */
+            color: #005d95; /* Cor padrão para títulos dentro da caixa se for usá-los */
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="logo-sao-geraldo.png" alt="Logo São Geraldo Service" class="logo-login">
+
+        <label for="username">Usuário</label>
+        <input type="text" id="username" placeholder="Digite seu usuário" />
+
+        <label for="password">Senha</label>
+        <input type="password" id="password" placeholder="Digite sua senha" />
+
+        <button onclick="login()">Entrar</button>
+        <p id="loginError" class="error"></p>
+    </div>
+
+    <script>
+        // --- SUAS CHAVES DO SUPABASE AQUI ---
+        // SUBSTITUA ESTES VALORES PELAS SUAS CHAVES REAIS DO SUPABASE!
+        const supabaseUrl = 'https://bowsorbdmabhnlzgynef.supabase.co'; // SUA URL DO PROJETO SUPABASE
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvd3NvcmJkbWFiaG5semd5bmVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIwODI1NTMsImV4cCI6MjA2NzY1ODU1M30.iTRhLEdmFUapxiSnm87ZrbmOhUjVkP2zbKfPDI3aGbg'; // SUA ANON PUBLIC KEY SUPABASE
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        // --- DOMÍNIO INTERNO PARA O LOGIN ---
+        // ESTE DEVE SER EXATAMENTE O MESMO DOMÍNIO QUE VOCÊ USOU PARA CRIAR OS USUÁRIOS NO SUPABASE AUTH.
+        const DOMINIO_INTERNO_PARA_LOGIN = '@saogeraldoservice.com.br'; // Confirme este valor!
+
+        // Função de Login que será chamada quando o botão "Entrar" for clicado
+        async function login() {
+            const usernameInput = document.getElementById('username').value.trim();
+            const passwordInput = document.getElementById('password').value.trim();
+            const loginErrorDisplay = document.getElementById('loginError');
+            const loginButton = document.querySelector('.login-container button');
+
+            loginErrorDisplay.innerText = ""; // Limpa mensagens de erro anteriores
+
+            if (!usernameInput || !passwordInput) {
+                Swal.fire('Atenção!', 'Por favor, preencha todos os campos.', 'warning');
+                return;
+            }
+
+            // Desabilita o botão e muda o texto para indicar processamento
+            loginButton.disabled = true;
+            loginButton.textContent = 'Entrando...';
+
+            // --- AQUI A MÁGICA ACONTECE: Converte o username em um formato de e-mail para o Supabase ---
+            const emailParaSupabase = usernameInput + DOMINIO_INTERNO_PARA_LOGIN;
+
+            // Chama a função de login do Supabase com o e-mail "montado" e a senha
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: emailParaSupabase,
+                password: passwordInput,
+            });
+
+            if (error) {
+                // Se houver um erro de autenticação (e-mail/senha incorretos, etc.)
+                console.error("Erro no login:", error);
+                let errorMessage = "Erro ao fazer login. Verifique suas credenciais.";
+                if (error.message.includes('Invalid login credentials') || error.message.includes('AuthApiError: Invalid login credentials')) {
+                    errorMessage = "Usuário ou senha inválidos.";
+                }
+                loginErrorDisplay.innerText = errorMessage; // Exibe o erro na div de erro do HTML
+                Swal.fire('Erro de Login!', errorMessage, 'error'); // Exibe um alerta mais amigável
+                
+                // Reabilita o botão e volta o texto original
+                loginButton.disabled = false;
+                loginButton.textContent = 'Entrar';
+            } else {
+                // Login bem-sucedido!
+                console.log("Login bem-sucedido:", data.user);
+
+                // Armazena o nome de usuário e o papel (role) no localStorage
+                // Essas informações vêm do 'app_metadata' que você definiu ao criar o usuário no Supabase
+                localStorage.setItem('nomeUsuario', data.user.app_metadata.nomeUsuario || usernameInput); // Prioriza 'nomeUsuario' do metadata, senão usa o username digitado
+                localStorage.setItem('role', data.user.app_metadata.role || 'comum'); // Prioriza 'role' do metadata, senão define 'comum' como padrão
+
+                // Redireciona para a página principal do aplicativo
+                window.location.href = "index.html";
+            }
+        }
+
+        // --- VERIFICA SESSÃO AO CARREGAR A PÁGINA DE LOGIN ---
+        // Se o usuário já estiver logado (tiver uma sessão ativa no Supabase),
+        // ele não precisa ver a página de login e é redirecionado para a página principal.
+        document.addEventListener('DOMContentLoaded', async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                // Se já houver uma sessão ativa, redireciona para a página principal
+                window.location.href = "index.html";
+            }
+        });
+    </script>
+</body>
+</html>

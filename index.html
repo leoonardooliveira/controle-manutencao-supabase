@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <title>Controle de Máquinas - São Geraldo Service</title>
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Mantenha suas regras de estilo CSS aqui */
+        @media (max-width: 900px) {
+            #listaManutencoes {
+                justify-content: center !important;
+            }
+            #ranking, #rankingMensal { /* #rankingMensal foi movido, mas a regra ainda existe */
+                max-width: 100% !important;
+                margin-top: 20px !important;
+                margin-left: 0 !important; /* Adicionado para remover margem lateral em telas menores */
+            }
+            .filtros-container {
+                justify-content: center !important;
+                flex-wrap: wrap !important;
+                gap: 10px !important;
+            }
+            .cadastro-container {
+                flex-direction: column;
+            }
+        }
+        .paginacao {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 20px 0;
+            user-select: none;
+        }
+        .paginacao button {
+            background-color: #005d95;
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .paginacao button.ativa {
+            background-color: #003f66;
+        }
+        .paginacao button.disabled {
+            background-color: #999;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+    <button class="logout-btn" onclick="logout()">Sair</button>
+
+    <div id="userInfoDisplay" style="display: none;">
+    </div>
+
+    <h1>Controle de Máquinas</h1>
+
+    <div class="tabs">
+        <button class="tab-button active" onclick="showTab('cadastro', event)">Cadastro</button>
+        <button class="tab-button" onclick="showTab('painel', event)">Painel</button>
+        <button class="tab-button" onclick="showTab('relatorios', event)">Relatórios</button>
+    </div>
+
+    <div id="cadastro" class="tab-content active">
+        <div class="cadastro-container" style="display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start;">
+            <div class="form-container" style="flex: 1; min-width: 280px;">
+                <label for="maquina">Selecione a máquina:</label>
+                <select id="maquina">
+                    <option value="">-- Escolha --</option>
+                </select>
+
+                <label for="problema">Problema:</label>
+                <input type="text" id="problema" placeholder="Descreva o problema" />
+
+                <label for="status">Status:</label>
+                <select id="status">
+                    <option value="">-- Escolha o status --</option>
+                    <option value="afazer">A Fazer</option>
+                    <option value="andamento">Em Andamento</option>
+                    <option value="concluido">Concluído</option>
+                </select>
+
+                <label for="data">Data:</label>
+                <input type="date" id="data" />
+
+                <button id="btnSalvar">Salvar</button>
+            </div>
+
+            <div id="cardEspecificacoesCadastro" class="form-container" style="flex: 1; min-width: 280px;">
+                <h3>Especificações da Máquina</h3>
+                <p>Selecione uma máquina para ver as especificações.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="painel" class="tab-content">
+
+        <div class="filtros-container" style="width: 100%; max-width: 900px; justify-content: flex-start;">
+            <div class="filtro-grupo">
+                <label for="filtroTexto">Buscar por Texto:</label>
+                <input type="text" id="filtroTexto" placeholder="Digite uma máquina ou problema..." />
+            </div>
+            <div class="filtro-grupo">
+                <label for="filtroDataInicio">Data de Início:</label>
+                <input type="date" id="filtroDataInicio" />
+            </div>
+            <div class="filtro-grupo">
+                <label for="filtroStatus">Status:</label>
+                <select id="filtroStatus">
+                    <option value="">Todos</option>
+                    <option value="afazer">A Fazer</option>
+                    <option value="andamento">Em Andamento</option>
+                    <option value="concluido">Concluído</option>
+                </select>
+            </div>
+            <div class="filtro-grupo">
+                <label for="filtroOrdenar">Ordenar Por:</label>
+                <select id="filtroOrdenar">
+                    <option value="maisRecente">Mais Recente</option>
+                    <option value="maisAntigo">Mais Antigo</option>
+                </select>
+            </div>
+            <button id="btnFiltrar">Filtrar</button>
+            <button id="btnLimparFiltros">Limpar Filtros</button>
+            <button id="btn-imprimir-selecionados" disabled>Imprimir Selecionados</button>
+        </div>
+
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+            <div id="listaManutencoes" style="flex: 3; display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-start;"></div>
+
+            <div style="flex: 1; max-width: 280px;">
+                <div id="ranking" style="background-color: rgba(0, 93, 149, 0.85); border-radius: 12px; padding: 15px 20px; color: white; box-shadow: 0 8px 15px rgba(0,0,0,0.3); height: fit-content; font-weight: 600; user-select: none; margin-bottom: 15px;">
+                    <h3>Ranking de Falhas Atuais</h3>
+                    <ol id="rankingLista" style="padding-left: 20px;"></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="paginacao" aria-label="Paginação" style="max-width: 900px; margin: 25px auto 40px auto;"></div>
+    </div>
+
+    <div id="relatorios" class="tab-content">
+        <div class="relatorios-content-wrapper" style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+            <div class="relatorios-main-content" style="flex: 3; min-width: 300px;">
+                <h2>Relatórios de Máquinas</h2>
+                <div class="filtros-container" style="width: 100%; max-width: 900px; justify-content: flex-start;">
+                    <div class="filtro-grupo">
+                        <label for="filtro-mes-relatorio">Selecione o Mês e Ano:</label>
+                        <input type="month" id="filtro-mes-relatorio">
+                    </div>
+                    <div class="filtro-grupo">
+                        <label for="filtro-maquina-relatorio">Selecione a Máquina:</label>
+                        <select id="filtro-maquina-relatorio">
+                            <option value="">-- Todas as Máquinas --</option>
+                        </select>
+                    </div>
+                    <button id="btn-gerar-pdf">Gerar PDF</button>
+                </div>
+                <p style="text-align: center; margin-top: 30px; color: #666;">Selecione os filtros acima para gerar um relatório.</p>
+            </div>
+
+            <div id="rankingMensal" style="flex: 1; max-width: 280px; background-color: rgba(0, 93, 149, 0.85); border-radius: 12px; padding: 15px 20px; color: white; box-shadow: 0 8px 15px rgba(0,0,0,0.3); height: fit-content; font-weight: 600; user-select: none;">
+                <h3>Ranking Mensal de Falhas</h3>
+                <div class="filtro-ranking-mensal">
+                    <label for="filtro-mes-ranking" style="color: white; font-weight: bold;">Filtrar por Mês:</label>
+                    <select id="filtro-mes-ranking" style="padding: 5px; border-radius: 5px; border: none; width: auto; flex-grow: 1;">
+                        <option value="">Selecione o Mês...</option>
+                    </select>
+                </div>
+                <ol id="rankingMensalLista" style="padding-left: 20px; margin-top: 15px;"></ol>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>
