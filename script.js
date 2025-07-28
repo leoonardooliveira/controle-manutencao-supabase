@@ -6,8 +6,8 @@ if (!localStorage.getItem('role')) {
 // --- FIM VERIFICA LOGIN ---
 
 // --- INÍCIO: INTEGRAÇÃO SUPABASE ---
-const supabaseUrl = 'https://jnwexcchxzjbjdfwgfbt.supabase.co'; 
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impud2V4Y2NoeHpqYmpkZndnZmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MzA1MTYsImV4cCI6MjA2OTMwNjUxNn0.bTQ9AxnD9qJZkaaVb6w0VomR6yAp6ye4SIEwQ52mYBs';
+const supabaseUrl = 'https://jnwexcchxzjbjdfwgfbt.supabase.co'; // SUA URL DO PROJETO SUPABASE
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impud2V4Y2NoeHpqYmpkZndnZmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MzA1MTYsImV4cCI6MjA2OTMwNjUxNn0.bTQ9AxnD9qJZkaaVb6w0VomR6yAp6ye4SIEwQ52mYBs'; // SUA ANON PUBLIC KEY SUPABASE
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 // --- FIM: INTEGRAÇÃO SUPABASE ---
 
@@ -36,9 +36,9 @@ const listaTecnicosFixos = [
     "Sérgio",
     "Wilherson"
 ].sort(); // Já ordenada alfabeticamente
- 
+// --- FIM NOVO: LISTA DE TÉCNICOS FIXOS ---
 
-// --- ESPECIFICAÇÕES DAS MÁQUINAS 
+// --- ESPECIFICAÇÕES DAS MÁQUINAS
 const maquinaEspecificacoes = {
     "lavadora01": { nome: "Lavadora Suzuki 50KG - 01", marca: "SUZUKI", modelo: "MLEx 50", capacidade: "50KG" },
     "lavadora02": { nome: "Lavadora Suzuki 100KG - 02", marca: "SUZUKI", modelo: "MLEx 100", capacidade: "100KG" },
@@ -95,7 +95,7 @@ function formatarNomeMaquinaCurto(maquinaId) {
     return maquinaId; // Retorna o ID original se não conseguir formatar
 }
 
-//  Funções de UI básicas 
+//  Funções de UI básicas
 
 // Preenche o select de máquinas no formulário de registro E na aba de relatórios
 function preencherSelectMaquinas() {
@@ -103,23 +103,32 @@ function preencherSelectMaquinas() {
     const selectMaquinaRelatorio = document.getElementById('filtro-maquina-relatorio');
 
     // Limpa as opções existentes (exceto a primeira "Escolha" ou "Todas as Máquinas")
-    while (selectMaquinaCadastro.options.length > 1) {
-        selectMaquinaCadastro.remove(1);
+    if (selectMaquinaCadastro) { // Verifica se o elemento existe
+        while (selectMaquinaCadastro.options.length > 1) {
+            selectMaquinaCadastro.remove(1);
+        }
     }
-    while (selectMaquinaRelatorio.options.length > 1) {
-        selectMaquinaRelatorio.remove(1);
+    if (selectMaquinaRelatorio) { // Verifica se o elemento existe
+        while (selectMaquinaRelatorio.options.length > 1) {
+            selectMaquinaRelatorio.remove(1);
+        }
     }
+
 
     for (const id in maquinaEspecificacoes) {
-        const optionCadastro = document.createElement('option');
-        optionCadastro.value = id;
-        optionCadastro.textContent = formatarNomeMaquinaCurto(id);
-        selectMaquinaCadastro.appendChild(optionCadastro);
+        if (selectMaquinaCadastro) { // Adiciona condição para preencher apenas se o elemento existe
+            const optionCadastro = document.createElement('option');
+            optionCadastro.value = id;
+            optionCadastro.textContent = formatarNomeMaquinaCurto(id);
+            selectMaquinaCadastro.appendChild(optionCadastro);
+        }
 
-        const optionRelatorio = document.createElement('option');
-        optionRelatorio.value = id;
-        optionRelatorio.textContent = formatarNomeMaquinaCurto(id);
-        selectMaquinaRelatorio.appendChild(optionRelatorio);
+        if (selectMaquinaRelatorio) { // Adiciona condição para preencher apenas se o elemento existe
+            const optionRelatorio = document.createElement('option');
+            optionRelatorio.value = id;
+            optionRelatorio.textContent = formatarNomeMaquinaCurto(id);
+            selectMaquinaRelatorio.appendChild(optionRelatorio);
+        }
     }
 }
 
@@ -166,15 +175,18 @@ function logout() {
 }
 
 function limparCampos() {
-    document.getElementById('maquina').value = '';
-    document.getElementById('problema').value = '';
-    document.getElementById('status').value = ''; // Reseta para o padrão vazio
-    document.getElementById('data').value = '';
-    // Limpar o card de especificações ao limpar campos
-    document.getElementById('cardEspecificacoesCadastro').innerHTML = `
-        <h3>Especificações da Máquina</h3>
-        <p>Selecione uma máquina para ver as especificações.</p>
-    `;
+    // Apenas limpa campos se o usuário for admin, para evitar que um visualizador chame essa função
+    if (role === 'admin') {
+        document.getElementById('maquina').value = '';
+        document.getElementById('problema').value = '';
+        document.getElementById('status').value = ''; // Reseta para o padrão vazio
+        document.getElementById('data').value = '';
+        // Limpar o card de especificações ao limpar campos
+        document.getElementById('cardEspecificacoesCadastro').innerHTML = `
+            <h3>Especificações da Máquina</h3>
+            <p>Selecione uma máquina para ver as especificações.</p>
+        `;
+    }
 }
 
 function formatarStatus(status) {
@@ -296,7 +308,7 @@ function atualizarPainel() {
         // Exibir o último item do histórico APENAS SE HOUVER MAIS DE UMA ENTRADA
         // OU SE A ÚLTIMA ENTRADA NÃO FOR EXATAMENTE A ENTRADA DE REGISTRO INICIAL
         if (dados.historico && dados.historico.length > 0) {
-            // Encontra a última entrada no histórico que representa uma ALTERAÇÃO 
+            // Encontra a última entrada no histórico que representa uma ALTERAÇÃO
             // Filtra o histórico para encontrar alterações de status (exceto a primeira se for 'a fazer')
             // Ou, de forma mais simples, pega a última entrada SE HOUVER MAIS DE UMA OU SE O STATUS NÃO FOR 'a fazer'
             const historicoFiltradoParaExibicao = dados.historico.filter((entry, index) => {
@@ -358,7 +370,7 @@ function atualizarPainel() {
             conteudoCard += `
                 <p class="status ${dados.status}"><strong>Status:</strong> ${formatarStatus(dados.status)}</p>
             `;
-            if (role === 'admin') {
+            if (role === 'admin') { // APENAS ADMIN PODE VER E USAR ESSES BOTÕES
                 conteudoCard += `
                     <div class="botoes-edicao">
                         <button onclick="editar('${id}')">Editar</button>
@@ -390,7 +402,8 @@ function toggleCardSelection(id, isChecked) {
     // Habilitar/desabilitar o botão de imprimir selecionados
     const btnImprimirSelecionados = document.getElementById('btn-imprimir-selecionados');
     if (btnImprimirSelecionados) {
-        btnImprimirSelecionados.disabled = selectedCards.size === 0;
+        // O botão de imprimir selecionados estará habilitado APENAS se o role for admin E houver cards selecionados
+        btnImprimirSelecionados.disabled = (role !== 'admin' || selectedCards.size === 0);
     }
 }
 
@@ -415,6 +428,10 @@ function renderizarPaginacao(totalPaginas) {
 
 // Confirmação antes de excluir com popup SweetAlert2
 function confirmarExclusao(id) {
+    if (role !== 'admin') { // Proteção adicional
+        Swal.fire('Acesso Negado!', 'Você não tem permissão para excluir registros.', 'error');
+        return;
+    }
     Swal.fire({
         title: 'Tem certeza?',
         text: "Esta ação não pode ser desfeita!",
@@ -432,6 +449,10 @@ function confirmarExclusao(id) {
 }
 
 async function excluir(id) {
+    if (role !== 'admin') { // Proteção adicional
+        Swal.fire('Acesso Negado!', 'Você não tem permissão para excluir registros.', 'error');
+        return;
+    }
     const { error } = await supabase
         .from('maquinas')
         .delete()
@@ -448,15 +469,19 @@ async function excluir(id) {
     // Atualiza o estado do botão de impressão
     const btnImprimirSelecionados = document.getElementById('btn-imprimir-selecionados');
     if (btnImprimirSelecionados) {
-        btnImprimirSelecionados.disabled = selectedCards.size === 0;
+        btnImprimirSelecionados.disabled = (role !== 'admin' || selectedCards.size === 0);
     }
 
     await carregarDoSupabase(); // Recarrega todos os dados após a exclusão
-    await salvarRankingMensal(); // Recalcula e salva o ranking mensal 
+    await salvarRankingMensal(); // Recalcula e salva o ranking mensal
     Swal.fire('Excluído!', 'O registro foi removido.', 'success');
 }
 
 function editar(id) {
+    if (role !== 'admin') { // Proteção adicional
+        Swal.fire('Acesso Negado!', 'Você não tem permissão para editar registros.', 'error');
+        return;
+    }
     if (maquinas[id]) {
         // Armazenar o estado original para poder cancelar
         maquinas[id].originalStatus = maquinas[id].status;
@@ -480,6 +505,10 @@ function editar(id) {
 }
 
 function cancelarEdicao(id) {
+    if (role !== 'admin') { // Proteção adicional
+        Swal.fire('Acesso Negado!', 'Você não tem permissão para cancelar edição.', 'error');
+        return;
+    }
     if (maquinas[id]) {
         // Restaura o status original e desativa a edição
         maquinas[id].status = maquinas[id].originalStatus;
@@ -491,6 +520,10 @@ function cancelarEdicao(id) {
 }
 
 async function salvarEdicao(id) {
+    if (role !== 'admin') { // Proteção adicional
+        Swal.fire('Acesso Negado!', 'Você não tem permissão para salvar edições.', 'error');
+        return;
+    }
     if (maquinas[id]) {
         const novoStatus = document.getElementById(`editStatus-${id}`).value;
         const agora = new Date();
@@ -515,7 +548,7 @@ async function salvarEdicao(id) {
         }
 
         const historicoEntry = {
-            usuario: nomeUsuario, // Quem está operando o sistema 
+            usuario: nomeUsuario, // Quem está operando o sistema
             status: novoStatus,
             dataHora: dataHora
         };
@@ -604,6 +637,15 @@ function atualizarRanking() {
 // --- NOVAS FUNÇÕES PARA RANKING MENSAL PERSISTENTE ---
 
 async function salvarRankingMensal() {
+    // Esta função deve ser executada APENAS por admins, mas como é chamada após carregarDoSupabase
+    // e os dados são lidos por todos, a restrição de "salvar" será feita pelo RLS do Supabase.
+    // No frontend, garantimos que a chamada só acontece se o usuário for admin, ou
+    // simplesmente deixamos o RLS cuidar. Para este caso, o RLS é a linha de defesa principal.
+    if (role !== 'admin') {
+        console.log("Usuário não é admin. Ignorando salvamento de ranking mensal.");
+        return;
+    }
+
     const hoje = new Date();
     const mesAtual = (hoje.getMonth() + 1).toString().padStart(2, '0'); // Mês atual (1-12), formatado com 2 dígitos
     const anoAtual = hoje.getFullYear();
@@ -612,8 +654,6 @@ async function salvarRankingMensal() {
     console.log(`[salvarRankingMensal] Iniciando cálculo e salvamento do ranking. Mês/Ano atual de referência: ${chaveMesAtual}`);
 
     // 1. Calcular a contagem de problemas por máquina para CADA MÊS existente nos registros de 'maquinas'
-    // A ideia aqui é calcular o ranking para TODOS os meses que têm dados de manutenção,
-    // não apenas para o mês atual. Isso garantirá que todos os meses com dados sejam salvos.
     const contagemTotalPorMes = {}; // Armazenará { "YYYY-MM": { "maquinaId": count, ... }, ... }
 
     // 'maquinas' é o objeto global que contém todos os registros de manutenção carregados
@@ -805,7 +845,7 @@ function formatarMesAno(chaveMes) {
 
 // --- FIM FUNÇÕES PARA RANKING MENSAL PERSISTENTE ---
 
-//FUNÇÕES PARA RELATÓRIOS (PDF) 
+//FUNÇÕES PARA RELATÓRIOS (PDF)
 async function gerarRelatorioPDF(idsParaImprimir = null) {
     console.log("gerarRelatorioPDF: idsParaImprimir recebidos:", idsParaImprimir);
     console.log("Conteúdo atual de 'maquinas':", maquinas);
@@ -824,14 +864,14 @@ async function gerarRelatorioPDF(idsParaImprimir = null) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    const logoUrl = 'logo-sao-geraldo-removebg-preview.png'; 
-    // Posição e tamanho da logo 
+    const logoUrl = 'logo-sao-geraldo-removebg-preview.png';
+    // Posição e tamanho da logo
     const imgX = 14; // Posição X da imagem (margem esquerda)
     const imgY = 10; // Posição Y da imagem (margem superior)
     const imgWidth = 50; // Largura da imagem (em mm)
-    const imgHeight = 20; // Altura da imagem (em mm) 
+    const imgHeight = 20; // Altura da imagem (em mm)
 
-    let imgElement; 
+    let imgElement;
 
     try {
         imgElement = new Image(); // Atribui a imagem à variável declarada
@@ -845,7 +885,7 @@ async function gerarRelatorioPDF(idsParaImprimir = null) {
         console.error("Erro ao carregar logo:", error);
         imgElement = null; // Garante que imgElement não seja um objeto inválido
     }
-    // FIM DO CÓDIGO PARA LOGO 
+    // FIM DO CÓDIGO PARA LOGO
 
 
     // Função auxiliar para adicionar a logo e o título em uma página
@@ -934,7 +974,7 @@ async function gerarRelatorioPDF(idsParaImprimir = null) {
         const horaFormatada = item.hora ? item.hora.substring(0, 5) : 'N/A';
 
         // Pular para a próxima página se não houver espaço suficiente
-        const alturaNecessaria = isGerandoOS ? 130 : 65; 
+        const alturaNecessaria = isGerandoOS ? 130 : 65;
 
         // Lógica de nova página
         if (y + alturaNecessaria > doc.internal.pageSize.height - 10) { // Margem inferior de 10mm
@@ -1030,8 +1070,12 @@ async function gerarRelatorioPDF(idsParaImprimir = null) {
     }
 }
 
-// SUPABASE: Funções de Interação com a tabela 'maquinas' 
+// SUPABASE: Funções de Interação com a tabela 'maquinas'
 async function salvarNoSupabase(maquina, problema, status, data, hora, usuario) {
+    if (role !== 'admin') { // Proteção adicional
+        Swal.fire('Acesso Negado!', 'Você não tem permissão para adicionar registros.', 'error');
+        return false;
+    }
     const criado_em = `${data}T${hora}`; // Formato correto YYYY-MM-DDTHH:MM:SS // Garante formato de datetime completo
 
     // Inicia o histórico com a entrada inicial
@@ -1090,10 +1134,15 @@ async function carregarDoSupabase() {
 
 // --- DOMContentLoaded e Event Listeners ---
 document.addEventListener('DOMContentLoaded', async () => {
-    // Esconde a div de informações do usuário no carregamento
+    // Exibe a div de informações do usuário no carregamento e preenche com nome e role
     const userInfoDisplay = document.getElementById('userInfoDisplay');
-    if (userInfoDisplay) {
-        userInfoDisplay.style.display = 'none';
+    const userNameSpan = document.getElementById('userName');
+    const userRoleSpan = document.getElementById('userRole');
+
+    if (userInfoDisplay && userNameSpan && userRoleSpan) {
+        userNameSpan.textContent = nomeUsuario;
+        userRoleSpan.textContent = `(${role.charAt(0).toUpperCase() + role.slice(1)})`; // Capitaliza o papel
+        userInfoDisplay.style.display = 'block'; // Torna visível
     }
 
 
@@ -1108,19 +1157,77 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     preencherSelectMaquinas(); // Preenche as opções do dropdown de máquinas (cadastro E relatórios)
 
-    // Define a data atual como padrão no campo de data do formulário
-    const hoje = new Date();
-    document.getElementById('data').value = hoje.toISOString().slice(0, 10);
+    // Define a data atual como padrão no campo de data do formulário (apenas se for admin)
+    const dataField = document.getElementById('data');
+    if (dataField && role === 'admin') {
+        const hoje = new Date();
+        dataField.value = hoje.toISOString().slice(0, 10);
+    }
 
     // Carrega dados e atualiza todos os painéis e rankings
     await carregarDoSupabase(); // 1. Carrega os dados das máquinas primeiro, POPULANDO 'maquinas'
     await salvarRankingMensal(); // 2. Calcula e SALVA o ranking mensal no Supabase com os dados recém-carregados
     await atualizarRankingMensal(); // 3. Exibe o ranking mensal (agora baseado nos dados do Supabase que foram atualizados)
 
+    // --- Restrições de UI para usuários não-admin (visualizadores) ---
+    if (role !== 'admin') {
+        // Aba de Registro (formulário)
+        const registroForm = document.getElementById('registro'); // Assuming 'registro' is the ID of the div containing the form
+        if (registroForm) {
+            const formElements = registroForm.querySelectorAll('input, select, textarea, button');
+            formElements.forEach(element => {
+                if (element.id !== 'tabRegistro') { // Não desabilita o próprio botão da aba
+                    element.disabled = true;
+                    // Oculta o botão de salvar no formulário de registro
+                    if (element.id === 'btnSalvar') {
+                        element.style.display = 'none';
+                    }
+                    if (element.id === 'btnLimparCampos') { // Oculta o botão de limpar campos
+                        element.style.display = 'none';
+                    }
+                }
+            });
+            // Oculta o cabeçalho "Registrar Nova Manutenção" se a aba for a de registro
+            const tabRegistroContent = document.getElementById('registro');
+            const registroTitle = tabRegistroContent ? tabRegistroContent.querySelector('h2') : null;
+            if (registroTitle) {
+                 registroTitle.textContent = 'Aba de Registro (Apenas Visualização)';
+            }
+        }
+
+
+        // Botão "Imprimir Selecionados" no painel
+        const btnImprimirSelecionados = document.getElementById('btn-imprimir-selecionados');
+        if (btnImprimirSelecionados) {
+            btnImprimirSelecionados.disabled = true; // Desabilita
+        }
+
+        // Botão "Gerar Relatório PDF" na aba de Relatórios
+        const btnGerarPdf = document.getElementById('btn-gerar-pdf');
+        if (btnGerarPdf) {
+            btnGerarPdf.disabled = true; // Desabilita
+        }
+
+        // Desabilita os selects de filtro na aba de relatório (se quiser impedir que visualizador filtre para PDF)
+        // Se a intenção é que o visualizador possa filtrar relatórios para VER na tela, mas não imprimir,
+        // então não desabilite esses filtros. O PDF já está desabilitado acima.
+        // const filtroMesRelatorio = document.getElementById('filtro-mes-relatorio');
+        // if (filtroMesRelatorio) filtroMesRelatorio.disabled = true;
+        // const filtroMaquinaRelatorio = document.getElementById('filtro-maquina-relatorio');
+        // if (filtroMaquinaRelatorio) filtroMaquinaRelatorio.disabled = true;
+    }
+
+
     // Event Listener para o botão Salvar
     const btnSalvar = document.getElementById('btnSalvar');
     if (btnSalvar) {
         btnSalvar.addEventListener('click', async () => {
+            // Verifica o role novamente antes de qualquer operação de escrita
+            if (role !== 'admin') {
+                Swal.fire('Acesso Negado!', 'Você não tem permissão para adicionar registros.', 'error');
+                return;
+            }
+
             // Desabilita o botão para evitar cliques múltiplos
             btnSalvar.disabled = true;
             btnSalvar.textContent = 'Salvando...'; // Feedback visual
@@ -1159,7 +1266,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Event Listeners para Filtros no Painel
+    // Event Listeners para Filtros no Painel - Esses podem ser usados por visualizadores
     const btnFiltrar = document.getElementById('btnFiltrar');
     if (btnFiltrar) {
         btnFiltrar.addEventListener('click', () => {
@@ -1184,14 +1291,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // Event listener para o botão Gerar PDF na aba de relatórios
+    // Se o btnGerarPdf for null aqui, significa que já foi desabilitado/ocultado na seção 'Restrições de UI'
     const btnGerarPdf = document.getElementById('btn-gerar-pdf');
-    if (btnGerarPdf) {
+    if (btnGerarPdf && role === 'admin') { // Permite gerar PDF apenas para admins
         btnGerarPdf.addEventListener('click', () => gerarRelatorioPDF()); // Chama sem IDs para o relatório normal
     }
 
+
     //Event listener para o botão Imprimir Selecionados no painel
+    // Se o btnImprimirSelecionados for null aqui, significa que já foi desabilitado/ocultado na seção 'Restrições de UI'
     const btnImprimirSelecionados = document.getElementById('btn-imprimir-selecionados');
-    if (btnImprimirSelecionados) {
+    if (btnImprimirSelecionados && role === 'admin') { // Permite imprimir selecionados apenas para admins
         btnImprimirSelecionados.addEventListener('click', () => {
             // CONSOLE.LOG ADICIONADO AQUI
             console.log("Evento de clique no botão 'Imprimir Selecionados'. selectedCards:", selectedCards);
@@ -1203,8 +1313,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 Swal.fire('Atenção!', 'Nenhum card selecionado para impressão.', 'warning');
             }
         });
-        // Desabilita o botão inicialmente se não houver cards selecionados
-        btnImprimirSelecionados.disabled = selectedCards.size === 0;
+        // Desabilita o botão inicialmente se não houver cards selecionados OU se não for admin
+        btnImprimirSelecionados.disabled = (selectedCards.size === 0 || role !== 'admin');
     }
 
     // Event listener para o filtro de mês/ano do ranking mensal
