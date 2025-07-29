@@ -1,225 +1,248 @@
 /* Reset básico */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+/* Estilos gerais do corpo, priorizando os do login.html */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #0083c8 0%, #005d95 100%);
-  min-height: 100vh;
-  color: #fff;
-  padding: 30px 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0083c8 0%, #005d95 100%);
+    min-height: 100vh;
+    color: #fff;
+    padding: 30px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Alinha o conteúdo verticalmente ao centro, como estava no login.html */
+    align-items: center; /* Centraliza horizontalmente, como estava no login.html */
+    margin: 0; /* Garante que não haja margens */
 }
 
-/* LOGIN */
-#login-container {
-  background-color: rgba(0, 93, 149, 0.85);
-  padding: 30px 40px;
-  border-radius: 12px;
-  box-shadow: 0 8px 15px rgba(0,0,0,0.3);
-  text-align: center;
-  display: none; /* Este display: none é para o CONTAINER do login, não para a logo que está fora dele */
+/* Estilos do container de login (anteriormente #login-container, agora .login-container para corresponder ao HTML) */
+.login-container {
+    background-color: #fff; /* Alterado para branco puro, como estava no login.html */
+    padding: 30px; /* Reduzido o padding para dar mais espaço à logo, como estava no login.html */
+    border-radius: 8px; /* Mantido do login.html */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Mantido do login.html */
+    width: 350px; /* Mantido do login.html */
+    text-align: center; /* Mantido do login.html */
+    /* margin-top removido, pois a logo agora estará DENTRO do container */
+    /* O display: none/block será gerenciado por JavaScript com a classe 'active' */
 }
 
-#login-container.active {
-  display: block;
+/* Estilos dos labels dentro do container de login */
+.login-container label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #555; /* Cor mais escura para o texto dentro da caixa branca, como estava no login.html */
+    font-weight: bold; /* Mantido do login.html */
+    text-align: left; /* Mantido do login.html */
 }
 
-#login-container h1 {
-  margin-bottom: 20px;
-  color: #fff;
+/* Estilos dos inputs dentro do container de login */
+.login-container input {
+    width: calc(100% - 20px); /* Mantido do login.html */
+    padding: 10px; /* Mantido do login.html */
+    margin-bottom: 15px; /* Mantido do login.html */
+    border: 1px solid #ddd; /* Mantido do login.html */
+    border-radius: 4px; /* Mantido do login.html */
+    font-size: 16px; /* Mantido do login.html */
+    color: #222; /* Cor de texto mais escura para inputs, como estava no login.html */
+    background-color: #f8f8f8; /* Fundo levemente cinza para inputs, como estava no login.html */
 }
 
-#login-container label {
-  display: block;
-  margin: 10px 0 5px;
-  font-weight: bold;
-  color: #fff;
+/* Estilos dos botões dentro do container de login */
+.login-container button {
+    background-color: #007bff; /* Azul padrão, pode mudar para o verde da sua marca se quiser, como estava no login.html */
+    color: white; /* Mantido do login.html */
+    padding: 12px 20px; /* Mantido do login.html */
+    border: none; /* Mantido do login.html */
+    border-radius: 4px; /* Mantido do login.html */
+    cursor: pointer; /* Mantido do login.html */
+    font-size: 18px; /* Mantido do login.html */
+    width: 100%; /* Mantido do login.html */
+    transition: background-color 0.3s ease; /* Mantido do login.html */
+}
+.login-container button:hover {
+    background-color: #0056b3; /* Mantido do login.html */
+}
+.login-container button:disabled {
+    background-color: #cccccc; /* Mantido do login.html */
+    cursor: not-allowed; /* Mantido do login.html */
 }
 
-#login-container input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  margin-bottom: 15px;
-  font-size: 1rem;
-  color: #222;
+/* Estilo de erro no container de login */
+.login-container .error {
+    color: red; /* Mantido do login.html */
+    margin-top: 10px; /* Mantido do login.html */
+    font-weight: bold; /* Mantido do login.html */
 }
 
-#login-container button {
-  background-color: #c2db00;
-  color: #005d95;
-  font-weight: bold;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  width: 100%;
+/* Estilo da logo dentro do login (nova classe) */
+.logo-login {
+    max-width: 250px; /* Aumentado para preencher mais o espaço da caixa, como estava no login.html */
+    height: auto; /* Mantém a proporção, como estava no login.html */
+    margin: 0 auto 25px auto; /* Centraliza horizontalmente e adiciona espaço abaixo, como estava no login.html */
+    display: block; /* Garante que 'margin: auto' funcione, como estava no login.html */
 }
 
-#login-container button:hover {
-  background-color: #a0b300;
+/* Estilos globais de h1 e h2, ajustados para compatibilidade */
+h1, h2 {
+    /* Se você tiver outros h1/h2 em outras páginas, considere mover
+       estes estilos para um CSS específico do login ou usar IDs mais específicos */
+    color: #005d95; /* Cor padrão para títulos dentro da caixa se for usá-los, como estava no login.html */
 }
 
-#login-container .error {
-  color: #ff4d4d;
-  margin-top: 10px;
-  font-size: 0.9rem;
+/* INÍCIO DOS ESTILOS JÁ EXISTENTES NO SEU style.css original */
+
+/* Títulos globais, ajustados para evitar conflito com os de login */
+h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #fff;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+}
+
+h2 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
 }
 
 /* Botão de logout */
 .logout-btn {
-  background-color: #db0000;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 15px;
-  cursor: pointer;
-  margin-bottom: 20px;
+    background-color: #db0000;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 15px;
+    cursor: pointer;
+    margin-bottom: 20px;
 }
 
 .logout-btn:hover {
-  background-color: #a80000;
-}
-
-/* Títulos */
-h1 {
-  font-size: 2.8rem;
-  font-weight: 700;
-  margin-bottom: 15px;
-  color: #fff;
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
-}
-
-h2 {
-  margin-top: 40px;
-  margin-bottom: 20px;
-  font-weight: 600;
-  color: #fff;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+    background-color: #a80000;
 }
 
 /* Tabs */
 .tabs {
-  margin-bottom: 20px;
-  display: flex;
-  gap: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
 }
 
 .tab-button {
-  background-color: #005d95;
-  border: none;
-  padding: 10px 25px;
-  border-radius: 8px;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+    background-color: #005d95;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .tab-button.active,
 .tab-button:hover {
-  background-color: #c2db00;
-  color: #005d95;
+    background-color: #c2db00;
+    color: #005d95;
 }
 
 .tab-content {
-  display: none;
-  width: 100%;
-  max-width: 900px;
+    display: none;
+    width: 100%;
+    max-width: 900px;
 }
 
 .tab-content.active {
-  display: block;
+    display: block;
 }
 
 /* Container do formulário */
 .form-container {
-  background-color: rgba(0, 93, 149, 0.85); /* azul1 com transparência */
-  padding: 25px 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 15px rgba(0,0,0,0.25);
-  width: 380px;
-  max-width: 100%;
+    background-color: rgba(0, 93, 149, 0.85); /* azul1 com transparência */
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.25);
+    width: 380px;
+    max-width: 100%;
 }
 
 /* Labels */
 label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: #fff;
-  font-size: 0.9rem;
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #fff;
+    font-size: 0.9rem;
 }
 
 /* Inputs e selects */
 input[type="text"], select, input[type="date"], input[type="month"] { /* Adicionado input[type="month"] */
-  width: 100%;
-  padding: 10px 14px;
-  margin-bottom: 18px;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  outline: none;
-  transition: box-shadow 0.3s ease;
-  background-color: #eaf2a1;
-  color: #222;
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+    background-color: #eaf2a1;
+    color: #222;
 }
 
 input[type="text"]:focus, select:focus, input[type="date"]:focus, input[type="month"]:focus { /* Adicionado input[type="month"] */
-  box-shadow: 0 0 8px #c2db00;
-  background-color: #fff;
+    box-shadow: 0 0 8px #c2db00;
+    background-color: #fff;
 }
 
 /* Botão Salvar */
 button#btnSalvar {
-  background-color: #c2db00;
-  color: #005d95;
-  font-weight: 700;
-  font-size: 1.1rem;
-  padding: 12px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  width: 100%;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  box-shadow: 0 6px 10px rgba(194,219,0,0.8);
+    background-color: #c2db00;
+    color: #005d95;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 6px 10px rgba(194,219,0,0.8);
 }
 
 button#btnSalvar:hover {
-  background-color: #a0b300;
-  color: #003e63;
-  box-shadow: 0 8px 14px rgba(160,179,0,1);
+    background-color: #a0b300;
+    color: #003e63;
+    box-shadow: 0 8px 14px rgba(160,179,0,1);
 }
 
 /* Container dos filtros */
 .filtros-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  align-items: center;
-  margin-bottom: 20px;
-  justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: center;
 }
 
 /* Cada grupo filtro + label */
 .filtro-grupo {
-  display: flex;
-  flex-direction: column;
-  min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
 }
 
 /* Label dos filtros */
 .filtro-grupo label {
-  font-weight: 600;
-  margin-bottom: 5px;
-  color: #fff;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #fff;
 }
 
 /* Inputs e selects dos filtros */
@@ -227,23 +250,23 @@ button#btnSalvar:hover {
 .filtro-grupo input[type="date"],
 .filtro-grupo input[type="month"], /* Adicionado input[type="month"] */
 .filtro-grupo input[type="text"] { /* Adicionado input[type="text"] para garantir estilo consistente */
-  padding: 8px 10px;
-  border-radius: 8px;
-  border: none;
-  font-size: 1rem;
-  background-color: #eaf2a1;
-  color: #222;
-  outline: none;
-  font-weight: 600;
-  transition: box-shadow 0.3s ease;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    background-color: #eaf2a1;
+    color: #222;
+    outline: none;
+    font-weight: 600;
+    transition: box-shadow 0.3s ease;
 }
 
 .filtros-container select:focus,
 .filtros-container input[type="date"]:focus,
 .filtros-container input[type="month"]:focus, /* Adicionado input[type="month"] */
 .filtros-container input[type="text"]:focus { /* Adicionado input[type="text"] */
-  box-shadow: 0 0 8px #c2db00;
-  background-color: #fff;
+    box-shadow: 0 0 8px #c2db00;
+    background-color: #fff;
 }
 
 
@@ -252,22 +275,22 @@ button#btnSalvar:hover {
 #btnLimparFiltros,
 #btn-gerar-pdf,
 #btn-imprimir-selecionados { /* <<<< Adicionado AQUI! */
-  background-color: #c2db00;
-  color: #005d95;
-  font-weight: 700;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  white-space: nowrap; /* Impede quebra de linha */
+    background-color: #c2db00;
+    color: #005d95;
+    font-weight: 700;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    white-space: nowrap; /* Impede quebra de linha */
 }
 
 #btnFiltrar:hover,
 #btnLimparFiltros:hover,
 #btn-gerar-pdf:hover,
 #btn-imprimir-selecionados:hover { /* <<<< Adicionado AQUI! */
-  background-color: #a0b300;
+    background-color: #a0b300;
 }
 
 /* Estilo para botão desabilitado (importante para o botão de imprimir) */
@@ -282,251 +305,251 @@ button#btnSalvar:hover {
 
 /* Painel de cartões */
 .container {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  width: 100%;
-  max-width: 900px;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 900px;
 }
 
 /* Cartões das máquinas */
 .card {
-  background: #005d95;
-  color: #fff;
-  border-radius: 14px;
-  padding: 25px 20px; /* VAI SER ALTERADO ABAIXO */
-  width: 270px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-  transition: transform 0.3s ease;
+    background: #005d95;
+    color: #fff;
+    border-radius: 14px;
+    padding: 25px 20px; /* VAI SER ALTERADO ABAIXO */
+    width: 270px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+    transition: transform 0.3s ease;
 }
 
 .card:hover {
-  transform: scale(1.05);
+    transform: scale(1.05);
 }
 
 .card h3 {
-  margin-bottom: 14px;
-  font-size: 1.4rem;
-  text-shadow: 1px 1px 3px #0008;
-  color: #fff;
+    margin-bottom: 14px;
+    font-size: 1.4rem;
+    text-shadow: 1px 1px 3px #0008;
+    color: #fff;
 }
 
 /* Status coloridos */
 .status {
-  font-weight: 700;
-  font-size: 1rem;
-  margin-top: 12px;
-  padding: 6px 12px;
-  border-radius: 20px;
-  width: fit-content;
-  user-select: none;
-  box-shadow: 0 0 6px rgba(0,0,0,0.3);
-  color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-top: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    width: fit-content;
+    user-select: none;
+    box-shadow: 0 0 6px rgba(0,0,0,0.3);
+    color: #fff;
 }
 
 .status.afazer {
-  background-color: #db0000; /* vermelho forte */
-  box-shadow: 0 0 10px #db0000aa;
+    background-color: #db0000; /* vermelho forte */
+    box-shadow: 0 0 10px #db0000aa;
 }
 
 .status.andamento {
-  background-color: #db8b00; /* laranja forte */
-  box-shadow: 0 0 10px #db8b00aa;
+    background-color: #db8b00; /* laranja forte */
+    box-shadow: 0 0 10px #db8b00aa;
 }
 
 .status.concluido {
-  background-color: #c2db00; /* verde da marca */
-  color: #005d95;
-  box-shadow: 0 0 10px #c2db00aa;
+    background-color: #c2db00; /* verde da marca */
+    color: #005d95;
+    box-shadow: 0 0 10px #c2db00aa;
 }
 
 /* Dropdown para editar status */
 .status-select {
-  width: 100%;
-  padding: 8px;
-  margin-top: 6px;
-  border-radius: 8px;
-  font-size: 1rem;
-  border: none;
-  background-color: #eaf2a1;
-  color: #222;
-  font-weight: 600;
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    border-radius: 8px;
+    font-size: 1rem;
+    border: none;
+    background-color: #eaf2a1;
+    color: #222;
+    font-weight: 600;
 }
 
 .status-select:focus {
-  outline: none;
-  box-shadow: 0 0 8px #c2db00;
+    outline: none;
+    box-shadow: 0 0 8px #c2db00;
 }
 
 /* Botões de edição */
 .botoes-edicao {
-  margin-top: 12px; /* VAI SER ALTERADO ABAIXO */
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
+    margin-top: 12px; /* VAI SER ALTERADO ABAIXO */
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 .botoes-edicao button {
-  padding: 8px 14px;
-  font-size: 0.9rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
 .botoes-edicao button:first-child {
-  background-color: #c2db00; /* verde */
-  color: #005d95;
+    background-color: #c2db00; /* verde */
+    color: #005d95;
 }
 
 .botoes-edicao button:first-child:hover {
-  background-color: #a0b300;
+    background-color: #a0b300;
 }
 
 /* === ADIÇÃO PARA RANKING === */
 #ranking {
-  background-color: rgba(0, 93, 149, 0.85);
-  border-radius: 12px;
-  padding: 25px 30px;
-  color: #fff;
-  box-shadow: 0 8px 15px rgba(0,0,0,0.3);
-  height: fit-content;
-  font-weight: 600;
-  user-select: none;
-  max-width: 280px;
-  margin-left: 10px;
+    background-color: rgba(0, 93, 149, 0.85);
+    border-radius: 12px;
+    padding: 25px 30px;
+    color: #fff;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+    height: fit-content;
+    font-weight: 600;
+    user-select: none;
+    max-width: 280px;
+    margin-left: 10px;
 }
 
 #ranking h3 {
-  margin-bottom: 15px;
-  font-weight: 700;
-  font-size: 1.3rem;
-  color: #fff;
+    margin-bottom: 15px;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #fff;
 }
 
 #ranking ol {
-  padding-left: 20px;
-  margin: 0;
+    padding-left: 20px;
+    margin: 0;
 }
 
 #ranking li {
-  margin-bottom: 8px;
+    margin-bottom: 8px;
 }
 
 /* === NOVO ADICIONADO PARA #rankingMensal e alinhamento com #ranking === */
 #rankingMensal {
-  background-color: rgba(0, 93, 149, 0.85);
-  border-radius: 12px;
-  padding: 25px 30px;
-  color: #fff;
-  box-shadow: 0 8px 15px rgba(0,0,0,0.3);
-  height: fit-content;
-  font-weight: 600;
-  user-select: none;
-  max-width: 280px;
-  margin-left: 10px;
-  margin-top: 20px; /* espaçamento vertical entre rankings */
+    background-color: rgba(0, 93, 149, 0.85);
+    border-radius: 12px;
+    padding: 25px 30px;
+    color: #fff;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+    height: fit-content;
+    font-weight: 600;
+    user-select: none;
+    max-width: 280px;
+    margin-left: 10px;
+    margin-top: 20px; /* espaçamento vertical entre rankings */
 }
 
 #rankingMensal h3 {
-  margin-bottom: 15px;
-  font-weight: 700;
-  font-size: 1.3rem;
-  color: #fff;
+    margin-bottom: 15px;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #fff;
 }
 
 #rankingMensal ol {
-  padding-left: 20px;
-  margin: 0;
+    padding-left: 20px;
+    margin: 0;
 }
 
 #rankingMensal li {
-  margin-bottom: 8px;
+    margin-bottom: 8px;
 }
 
 /* SLA: borda lateral colorida para indicar tempo */
 .sla-verde {
-  border-left: 5px solid #28a745; /* verde (SLA dentro do tempo) */
+    border-left: 5px solid #28a745; /* verde (SLA dentro do tempo) */
 }
 
 .sla-amarelo {
-  border-left: 5px solid #ffc107; /* amarelo (SLA próximo do limite) */
+    border-left: 5px solid #ffc107; /* amarelo (SLA próximo do limite) */
 }
 
 .sla-vermelho {
-  border-left: 5px solid #dc3545; /* vermelho (SLA estourado) */
+    border-left: 5px solid #dc3545; /* vermelho (SLA estourado) */
 }
 
 .sla-timer {
-  font-weight: bold;
-  margin-top: 8px;
-  font-size: 0.95rem;
-  display: block;
-  color: #fff;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+    font-weight: bold;
+    margin-top: 8px;
+    font-size: 0.95rem;
+    display: block;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
 }
 
 /* Paginação */
 .paginacao {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin: 20px 0;
-  user-select: none;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+    user-select: none;
 }
 .paginacao button {
-  background-color: #005d95;
-  border: none;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 700;
+    background-color: #005d95;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 700;
 }
 .paginacao button.ativa {
-  background-color: #003f66;
+    background-color: #003f66;
 }
 .paginacao button.disabled {
-  background-color: #999;
-  cursor: default;
+    background-color: #999;
+    cursor: default;
 }
 
 /* Responsivo */
 @media(max-width: 900px) {
-  #listaManutencoes {
-    justify-content: center !important;
-  }
-  #ranking, #rankingMensal {
-    max-width: 100% !important;
-    margin-top: 20px !important;
-    margin-left: 0 !important; /* Remove a margem lateral em telas menores */
-  }
-  .filtros-container {
-    justify-content: center !important;
-    flex-wrap: wrap !important;
-    gap: 10px !important;
-  }
-  .cadastro-container {
-    flex-direction: column;
-  }
+    #listaManutencoes {
+        justify-content: center !important;
+    }
+    #ranking, #rankingMensal {
+        max-width: 100% !important;
+        margin-top: 20px !important;
+        margin-left: 0 !important; /* Remove a margem lateral em telas menores */
+    }
+    .filtros-container {
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+    }
+    .cadastro-container {
+        flex-direction: column;
+    }
 }
 
 @media(max-width: 600px) {
-  .form-container {
-    width: 95%;
-  }
-  .card {
-    width: 90%;
-  }
-  .filtros-container {
-    justify-content: center;
-    gap: 10px;
-  }
-  .filtro-grupo {
-    min-width: 120px;
-  }
+    .form-container {
+        width: 95%;
+    }
+    .card {
+        width: 90%;
+    }
+    .filtros-container {
+        justify-content: center;
+        gap: 10px;
+    }
+    .filtro-grupo {
+        min-width: 120px;
+    }
 }
