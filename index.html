@@ -8,11 +8,37 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    </head>
+    <style>
+        /* Mantenha suas regras de estilo CSS aqui. Algumas regras responsivas foram movidas para style.css */
+        .paginacao {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 20px 0;
+            user-select: none;
+        }
+        .paginacao button {
+            background-color: #005d95;
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .paginacao button.ativa {
+            background-color: #003f66;
+        }
+        .paginacao button.disabled {
+            background-color: #999;
+            cursor: default;
+        }
+    </style>
+</head>
 <body>
     <button class="logout-btn" onclick="logout()">Sair</button>
 
-    <div id="userInfoDisplay" class="user-info-display">
+    <div id="userInfoDisplay" style="display: none;">
     </div>
 
     <h1>Controle de Máquinas</h1>
@@ -24,12 +50,17 @@
     </div>
 
     <div id="cadastro" class="tab-content active">
-        <div class="cadastro-container cadastro-flex-container">
-            <div class="form-container form-container-flex-item">
+        <div class="cadastro-flex-container">
+            <div class="card form-container-flex-item">
+                <h3>Cadastro de Manutenção</h3>
                 <label for="maquina">Selecione a máquina:</label>
-                <select id="maquina">
-                    <option value="">-- Escolha --</option>
-                </select>
+                <div style="display: flex; align-items: center; margin-bottom: 18px;">
+                    <select id="maquina" style="flex-grow: 1;">
+                        <option value="">-- Escolha --</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                    <button type="button" id="btnAtivarSelecaoMultipla" class="btn-selecao-multipla">Ativar Seleção Múltipla</button>
+                </div>
 
                 <label for="problema">Problema:</label>
                 <input type="text" id="problema" placeholder="Descreva o problema" />
@@ -48,16 +79,17 @@
                 <button id="btnSalvar">Salvar</button>
             </div>
 
-            <div id="cardEspecificacoesCadastro" class="form-container form-container-flex-item">
+            <div id="cardEspecificacoesCadastro" class="card form-container-flex-item">
                 <h3>Especificações da Máquina</h3>
                 <p>Selecione uma máquina para ver as especificações.</p>
+                <div id="especificacoesDisplay">
+                    </div>
             </div>
         </div>
     </div>
 
     <div id="painel" class="tab-content">
-
-        <div class="filtros-container" style="width: 100%; max-width: 900px; justify-content: flex-start;">
+        <div class="filtros-container">
             <div class="filtro-grupo">
                 <label for="filtroTexto">Buscar por Texto:</label>
                 <input type="text" id="filtroTexto" placeholder="Digite uma máquina ou problema..." />
@@ -90,22 +122,20 @@
         <div class="panel-flex-container">
             <div id="listaManutencoes" class="list-manutencoes-flex-item"></div>
 
-            <div class="ranking-flex-item">
-                <div id="ranking" class="ranking-current-falhas">
-                    <h3>Ranking de Falhas Atuais</h3>
-                    <ol id="rankingLista" class="ranking-list-padding"></ol>
-                </div>
+            <div id="ranking" class="card ranking-flex-item">
+                <h3>Ranking de Falhas Atuais</h3>
+                <ol id="rankingLista"></ol>
             </div>
         </div>
 
-        <div class="paginacao" aria-label="Paginação"></div>
+        <div class="paginacao" aria-label="Paginação" style="max-width: 900px; margin: 25px auto 40px auto;"></div>
     </div>
 
     <div id="relatorios" class="tab-content">
-        <div class="relatorios-content-wrapper">
-            <div class="relatorios-main-content">
+        <div class="relatorios-main-and-ranking-wrapper">
+            <div class="card relatorios-main-content">
                 <h2>Relatórios de Máquinas</h2>
-                <div class="filtros-container" style="width: 100%; max-width: 900px; justify-content: flex-start;">
+                <div class="filtros-container">
                     <div class="filtro-grupo">
                         <label for="filtro-mes-relatorio">Selecione o Mês e Ano:</label>
                         <input type="month" id="filtro-mes-relatorio">
@@ -121,7 +151,7 @@
                 <p class="relatorio-message-center">Selecione os filtros acima para gerar um relatório.</p>
             </div>
 
-            <div id="rankingMensal" class="ranking-mensal-relatorio">
+            <div id="rankingMensal" class="card ranking-mensal-relatorio">
                 <h3>Ranking Mensal de Falhas</h3>
                 <div class="filtro-ranking-mensal">
                     <label for="filtro-mes-ranking">Filtrar por Mês:</label>
@@ -129,7 +159,7 @@
                         <option value="">Selecione o Mês...</option>
                     </select>
                 </div>
-                <ol id="rankingMensalLista" class="ranking-mensal-list-margin-top"></ol>
+                <ol id="rankingMensalLista"></ol>
             </div>
         </div>
     </div>
