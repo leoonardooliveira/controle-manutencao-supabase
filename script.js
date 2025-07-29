@@ -3,16 +3,16 @@ if (!localStorage.getItem('role')) {
     // Se não estiver logado (ou se as chaves do localStorage não existirem), redireciona para login.
     window.location.href = "login.html";
 }
-// --- FIM VERIFICA LOGIN ---
+// FIM VERIFICA LOGIN 
 
-// --- INÍCIO: INTEGRAÇÃO SUPABASE ---
-const supabaseUrl = 'https://jnwexcchxzjbjdfwgfbt.supabase.co'; // SUA URL DO PROJETO SUPABASE
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impud2V4Y2NoeHpqYmpkZndnZmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MzA1MTYsImV4cCI6MjA2OTMwNjUxNn0.bTQ9AxnD9qJZkaaVb6w0VomR6yAp6ye4SIEwQ52mYBs'; // SUA ANON PUBLIC KEY SUPABASE
+// INTEGRAÇÃO SUPABASE 
+const supabaseUrl = 'https://jnwexcchxzjbjdfwgfbt.supabase.co'; 
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impud2V4Y2NoeHpqYmpkZndnZmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MzA1MTYsImV4cCI6MjA2OTMwNjUxNn0.bTQ9AxnD9qJZkaaVb6w0VomR6yAp6ye4SIEwQ52mYBs'; 
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-// --- FIM: INTEGRAÇÃO SUPABASE ---
+
 
 let maquinas = {}; // Objeto para armazenar os dados das máquinas carregados do Supabase
-// Se o usuário não estiver logado (e, portanto, redirecionado), essas linhas nem serão executadas.
+// Se o usuário não estiver logado (e, redirecionado), essas linhas nem serão executadas
 // Se ele estiver logado, o login.html já terá populado o localStorage.
 const role = localStorage.getItem('role');
 const nomeUsuario = localStorage.getItem('nomeUsuario') || 'Desconhecido'; // Evita undefined caso algo dê errado ou não esteja definido.
@@ -26,7 +26,7 @@ let ordenarPor = 'maisRecente'; // padrão ordenar do mais recente para o mais a
 // Conjunto para armazenar os IDs dos cards selecionados
 const selectedCards = new Set();
 
-// LISTA DE TÉCNICOS FIXOS (em ordem alfabética) ---
+// LISTA DE TÉCNICOS FIXOS 
 const listaTecnicosFixos = [
     "Cláudio",
     "Edgar",
@@ -36,7 +36,7 @@ const listaTecnicosFixos = [
     "Sérgio",
     "Wilherson"
 ].sort(); // Já ordenada alfabeticamente
-// --- FIM NOVO: LISTA DE TÉCNICOS FIXOS ---
+
 
 // --- ESPECIFICAÇÕES DAS MÁQUINAS
 const maquinaEspecificacoes = {
@@ -206,7 +206,7 @@ function formatarTempo(minutos) {
     }
 }
 
-// --- Funções de Manutenção (Painel) ---
+// Funções de Manutenção (Painel) 
 function atualizarPainel() {
     const listaManutencoes = document.getElementById('listaManutencoes');
     if (!listaManutencoes) {
@@ -310,7 +310,6 @@ function atualizarPainel() {
         if (dados.historico && dados.historico.length > 0) {
             // Encontra a última entrada no histórico que representa uma ALTERAÇÃO
             // Filtra o histórico para encontrar alterações de status (exceto a primeira se for 'a fazer')
-            // Ou, de forma mais simples, pega a última entrada SE HOUVER MAIS DE UMA OU SE O STATUS NÃO FOR 'a fazer'
             const historicoFiltradoParaExibicao = dados.historico.filter((entry, index) => {
                 // Se for a primeira entrada, só considera se o status for diferente de 'a fazer'
                 // ou se houver mais de uma entrada
@@ -619,7 +618,6 @@ function atualizarRanking() {
         .sort((a, b) => b[1] - a[1]); // Ordena do maior para o menor
 
     maquinasOrdenadas.forEach(([maquinaId, qtd]) => {
-        // AGORA USA A FUNÇÃO DE FORMATAÇÃO CURTA AQUI PARA EXIBIÇÃO NO RANKING
         const nomeFormatadoCurto = formatarNomeMaquinaCurto(maquinaId);
 
         const li = document.createElement('li');
@@ -634,13 +632,12 @@ function atualizarRanking() {
     }
 }
 
-// --- NOVAS FUNÇÕES PARA RANKING MENSAL PERSISTENTE ---
+//FUNÇÕES PARA RANKING MENSAL PERSISTENTE ---
 
 async function salvarRankingMensal() {
     // Esta função deve ser executada APENAS por admins, mas como é chamada após carregarDoSupabase
     // e os dados são lidos por todos, a restrição de "salvar" será feita pelo RLS do Supabase.
-    // No frontend, garantimos que a chamada só acontece se o usuário for admin, ou
-    // simplesmente deixamos o RLS cuidar. Para este caso, o RLS é a linha de defesa principal.
+    // simplesmente deixei o RLS cuidar. Para este caso, o RLS é a linha de defesa principal.
     if (role !== 'admin') {
         console.log("Usuário não é admin. Ignorando salvamento de ranking mensal.");
         return;
@@ -767,19 +764,19 @@ async function atualizarRankingMensal() {
     // Carrega TODOS os rankings para popular o filtro e depois filtrar
     console.log("[DEBUG] Chamando carregarRankingsMensais...");
     const todosRankings = await carregarRankingsMensais();
-    console.log("[DEBUG] Retorno de carregarRankingsMensais (todosRankings):", todosRankings, "Tipo:", typeof todosRankings); // NOVO LOG
+    console.log("[DEBUG] Retorno de carregarRankingsMensais (todosRankings):", todosRankings, "Tipo:", typeof todosRankings); 
 
     const rankingsSeguros = Array.isArray(todosRankings) ? todosRankings : [];
-    console.log("[DEBUG] Valor de rankingsSeguros:", rankingsSeguros, "É array?", Array.isArray(rankingsSeguros)); // NOVO LOG
+    console.log("[DEBUG] Valor de rankingsSeguros:", rankingsSeguros, "É array?", Array.isArray(rankingsSeguros)); 
 
     // Preenche as opções do select de filtro de ranking mensal (se ainda não estiverem preenchidas)
     const mesesDisponiveis = [...new Set(rankingsSeguros.map(item => item.mes).filter(mes => mes))].sort().reverse();
-    console.log("[DEBUG] Meses disponíveis (mesesDisponiveis):", mesesDisponiveis, "É array?", Array.isArray(mesesDisponiveis)); // NOVO LOG
+    console.log("[DEBUG] Meses disponíveis (mesesDisponiveis):", mesesDisponiveis, "É array?", Array.isArray(mesesDisponiveis)); 
 
 
     // Condição para preencher/atualizar as opções do select
     if (selectMesRanking.options.length === 0 || (selectMesRanking.options.length - 1 !== mesesDisponiveis.length && mesesDisponiveis.length > 0)) {
-        console.log("[DEBUG] Preenchendo select de meses..."); // NOVO LOG
+        console.log("[DEBUG] Preenchendo select de meses..."); 
         selectMesRanking.innerHTML = '';
         const optionDefault = document.createElement('option');
         optionDefault.value = '';
@@ -843,7 +840,6 @@ function formatarMesAno(chaveMes) {
 }
 
 
-// --- FIM FUNÇÕES PARA RANKING MENSAL PERSISTENTE ---
 
 //FUNÇÕES PARA RELATÓRIOS (PDF)
 async function gerarRelatorioPDF(idsParaImprimir = null) {
@@ -880,12 +876,11 @@ async function gerarRelatorioPDF(idsParaImprimir = null) {
             imgElement.onload = () => resolve();
             imgElement.onerror = () => reject(new Error(`Falha ao carregar a imagem: ${logoUrl}`));
         });
-        console.log("Logo carregada com sucesso."); // Apenas log, a adição real será via addPageHeader
+        console.log("Logo carregada com sucesso."); 
     } catch (error) {
         console.error("Erro ao carregar logo:", error);
         imgElement = null; // Garante que imgElement não seja um objeto inválido
     }
-    // FIM DO CÓDIGO PARA LOGO
 
 
     // Função auxiliar para adicionar a logo e o título em uma página
@@ -1118,7 +1113,7 @@ async function carregarDoSupabase() {
         const horaStr = dt.toTimeString().slice(0, 8); // Pega HH:MM:SS
         maquinas[item.id] = {
             id: item.id,
-            numero_os: item.numero_os, // NOVO: Armazena o numero_os
+            numero_os: item.numero_os, //Armazena o numero_os
             maquina: item.maquina,
             problema: item.problema,
             status: item.status,
@@ -1132,7 +1127,7 @@ async function carregarDoSupabase() {
     atualizarPainel(); // Atualiza o painel com os dados recém-carregados
 }
 
-// --- DOMContentLoaded e Event Listeners ---
+// DOMContentLoaded e Event Listeners 
 document.addEventListener('DOMContentLoaded', async () => {
     // Exibe a div de informações do usuário no carregamento e preenche com nome e role
     const userInfoDisplay = document.getElementById('userInfoDisplay');
@@ -1169,10 +1164,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     await salvarRankingMensal(); // 2. Calcula e SALVA o ranking mensal no Supabase com os dados recém-carregados
     await atualizarRankingMensal(); // 3. Exibe o ranking mensal (agora baseado nos dados do Supabase que foram atualizados)
 
-    // --- Restrições de UI para usuários não-admin (visualizadores) ---
+    // Restrições de UI para usuários não-admin (visualizadores) ---
     if (role !== 'admin') {
         // Aba de Registro (formulário)
-        const registroForm = document.getElementById('registro'); // Assuming 'registro' is the ID of the div containing the form
+        const registroForm = document.getElementById('registro'); 
         if (registroForm) {
             const formElements = registroForm.querySelectorAll('input, select, textarea, button');
             formElements.forEach(element => {
@@ -1208,13 +1203,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             btnGerarPdf.disabled = true; // Desabilita
         }
 
-        // Desabilita os selects de filtro na aba de relatório (se quiser impedir que visualizador filtre para PDF)
-        // Se a intenção é que o visualizador possa filtrar relatórios para VER na tela, mas não imprimir,
-        // então não desabilite esses filtros. O PDF já está desabilitado acima.
-        // const filtroMesRelatorio = document.getElementById('filtro-mes-relatorio');
-        // if (filtroMesRelatorio) filtroMesRelatorio.disabled = true;
-        // const filtroMaquinaRelatorio = document.getElementById('filtro-maquina-relatorio');
-        // if (filtroMaquinaRelatorio) filtroMaquinaRelatorio.disabled = true;
     }
 
 
@@ -1303,7 +1291,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const btnImprimirSelecionados = document.getElementById('btn-imprimir-selecionados');
     if (btnImprimirSelecionados && role === 'admin') { // Permite imprimir selecionados apenas para admins
         btnImprimirSelecionados.addEventListener('click', () => {
-            // CONSOLE.LOG ADICIONADO AQUI
             console.log("Evento de clique no botão 'Imprimir Selecionados'. selectedCards:", selectedCards);
 
             if (selectedCards.size > 0) {
