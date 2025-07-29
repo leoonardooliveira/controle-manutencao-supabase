@@ -14,8 +14,7 @@ body {
     padding: 30px 15px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Alinha o conteúdo ao topo para dar espaço ao cabeçalho */
-    align-items: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza horizontalmente o conteúdo principal */
     margin: 0;
 }
 
@@ -27,7 +26,7 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     width: 350px;
     text-align: center;
-    color: #333; /* Para garantir que o texto dentro seja legível */
+    color: #333; /* Texto dentro do container de login será escuro */
 }
 
 .login-container label {
@@ -95,16 +94,8 @@ h2 {
     margin-top: 40px;
     margin-bottom: 20px;
     font-weight: 600;
-    color: #fff; /* Mantido branco para o título principal */
+    color: #fff;
     text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
-}
-
-/* Estilo para h3 dentro dos cards, que geralmente precisa ser escuro */
-.card h3 {
-    color: #005d95; /* Cor mais escura para títulos dentro de cards brancos ou claros */
-    margin-bottom: 14px;
-    font-size: 1.4rem;
-    text-shadow: none; /* Removido text-shadow para clareza */
 }
 
 /* Botão de logout */
@@ -121,6 +112,16 @@ h2 {
 .logout-btn:hover {
     background-color: #a80000;
 }
+
+/* Display de informações do usuário (pode ser ajustado em script.js) */
+.user-info-display {
+    color: #fff;
+    text-align: right;
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 10px;
+}
+
 
 /* Tabs */
 .tabs {
@@ -146,64 +147,57 @@ h2 {
     color: #005d95;
 }
 
-/* Container de conteúdo de cada aba */
+/* Container de conteúdo de cada aba - Mantenha o fundo claro para a aba */
 .tab-content {
     display: none;
     width: 100%;
     max-width: 900px; /* Limita a largura do conteúdo da aba */
-    background-color: #f9f9f9; /* Fundo mais claro para os conteúdos */
+    background-color: #f9f9f9; /* Fundo mais claro para os conteúdos da ABA */
     border-radius: 8px;
     margin-top: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px; /* Adicionado padding para o conteúdo geral da aba */
+    color: #333; /* Cor do texto padrão para dentro da tab-content */
 }
 
 .tab-content.active {
     display: block;
 }
 
-/* Estilo base para todos os "cards" */
+/* Estilo base para todos os "cards" (formulário, especificações, ranking) */
+/* Este é o estilo de CARD AZUL ESCURO que você tinha e quer manter */
 .card {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 10px; /* Margem padrão para separar cards quando empilhados ou em flex */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    color: #333; /* Cor de texto padrão para cards claros */
-}
-
-/* Ajustes para o card específico no painel de cartões para evitar conflito com .card geral */
-/* Se este .card for o card de manutenção, ele precisa ser mais escuro */
-/* Se for para ser um cartão CLARO, ignore esta seção */
-/* VOU MANTER O SEU ESTILO ORIGINAL PARA O CARD DE MANUTENÇÃO, MAS COM A NOVA CLASSE DE FLEX-ITEM */
-.list-manutencoes-flex-item .card { /* Especifica que é o card dentro da lista de manutenções */
-    background: #005d95; /* Cor escura do seu card original */
-    color: #fff;
-    border-radius: 14px;
-    padding: 25px 20px;
-    width: 270px; /* Mantenha um width fixo se quiser grid-like */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+    background: rgba(0, 93, 149, 0.85); /* Seu azul escuro original */
+    color: #fff; /* Texto branco */
+    border-radius: 12px; /* Seu border-radius original */
+    padding: 25px 30px; /* Seu padding original */
+    box-shadow: 0 8px 15px rgba(0,0,0,0.25); /* Sua sombra original */
     transition: transform 0.3s ease;
-    /* Remover ou ajustar a margem se .list-manutencoes-flex-item já tiver gap */
-    margin: 0; /* A margem será controlada pelo gap do flexbox pai */
+    height: fit-content; /* Para cards de ranking e especificações */
 }
 
-.list-manutencoes-flex-item .card:hover {
-    transform: scale(1.05);
+/* Títulos dentro dos cards devem ser brancos novamente */
+.card h3 {
+    margin-bottom: 14px;
+    font-size: 1.4rem;
+    text-shadow: 1px 1px 3px #0008;
+    color: #fff; /* Voltou a ser branco */
 }
 
-/* Labels */
-label {
+/* Labels dentro dos cards (formulário, especificações) */
+.card label {
     display: block;
     font-weight: 600;
     margin-bottom: 6px;
-    color: #005d95; /* Cor para labels em fundos claros */
+    color: #fff; /* Voltou a ser branco */
     font-size: 0.9rem;
 }
 
-/* Inputs e selects */
-input[type="text"], select, input[type="date"], input[type="month"], input[type="password"] {
+/* Inputs e selects dentro dos cards */
+.card input[type="text"],
+.card select,
+.card input[type="date"],
+.card input[type="month"] {
     width: 100%;
     padding: 10px 14px;
     margin-bottom: 18px;
@@ -212,32 +206,39 @@ input[type="text"], select, input[type="date"], input[type="month"], input[type=
     font-size: 1rem;
     outline: none;
     transition: box-shadow 0.3s ease;
-    background-color: #eaf2a1;
-    color: #222;
+    background-color: #eaf2a1; /* Fundo amarelo claro original */
+    color: #222; /* Texto escuro */
 }
 
-input[type="text"]:focus, select:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="password"]:focus {
+.card input[type="text"]:focus,
+.card select:focus,
+.card input[type="date"]:focus,
+.card input[type="month"]:focus {
     box-shadow: 0 0 8px #c2db00;
-    background-color: #fff;
-}
-
-/* Botão Salvar (geral, mas #btnSalvar é mais específico) */
-button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #0056b3;
+    background-color: #fff; /* Fundo branco ao focar */
 }
 
 
+/* --- LAYOUT DA ABA CADASTRO --- */
+/* Este é o container que vai flexibilizar o formulário e as especificações */
+.cadastro-flex-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha em telas menores */
+    justify-content: center; /* Centraliza os itens horizontalmente */
+    gap: 20px; /* Espaçamento entre os itens flexíveis */
+    align-items: flex-start; /* Alinha os itens pelo topo */
+    width: 100%; /* Garante que o container ocupe a largura total do tab-content */
+}
+
+/* Estilo para os itens dentro do container flexível de cadastro */
+.form-container-flex-item {
+    flex: 1; /* Permite que os itens cresçam e ocupem o espaço disponível */
+    min-width: 300px; /* Garante que os cards não fiquem muito pequenos */
+    max-width: 45%; /* Limita o tamanho máximo para que fiquem lado a lado */
+    box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura */
+}
+
+/* Botão Salvar (dentro do card de formulário) */
 button#btnSalvar {
     background-color: #c2db00;
     color: #005d95;
@@ -258,34 +259,31 @@ button#btnSalvar:hover {
     box-shadow: 0 8px 14px rgba(160,179,0,1);
 }
 
-/* Container dos filtros */
+
+/* --- LAYOUT DA ABA PAINEL --- */
 .filtros-container {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
     align-items: flex-end; /* Alinha os botões e inputs na base */
     margin-bottom: 20px;
-    justify-content: center; /* Centraliza filtros */
-    width: 100%; /* Garante que o container de filtros ocupe a largura total */
-    max-width: 900px; /* Limita a largura máxima do container de filtros */
+    justify-content: flex-start; /* Alinha filtros à esquerda */
+    width: 100%;
+    max-width: 900px; /* Alinha com o tab-content */
 }
 
-/* Cada grupo filtro + label */
 .filtro-grupo {
     display: flex;
     flex-direction: column;
     min-width: 150px;
-    flex-grow: 1; /* Permite que os grupos cresçam um pouco */
 }
 
-/* Label dos filtros */
 .filtro-grupo label {
     font-weight: 600;
     margin-bottom: 5px;
-    color: #005d95; /* Cor para labels em fundos claros */
+    color: #333; /* Cor para labels dos filtros (fundo claro da aba) */
 }
 
-/* Inputs e selects dos filtros */
 .filtros-container select,
 .filtros-container input[type="date"],
 .filtros-container input[type="month"],
@@ -309,6 +307,7 @@ button#btnSalvar:hover {
     background-color: #fff;
 }
 
+
 /* Botões de filtro (geral e PDF) */
 #btnFiltrar,
 #btnLimparFiltros,
@@ -323,7 +322,7 @@ button#btnSalvar:hover {
     cursor: pointer;
     transition: background-color 0.3s ease;
     white-space: nowrap; /* Impede quebra de linha */
-    margin-top: 5px; /* Alinha botões com inputs se os inputs tiverem margin-bottom maior */
+    margin-top: 5px;
 }
 
 #btnFiltrar:hover,
@@ -333,13 +332,138 @@ button#btnSalvar:hover {
     background-color: #a0b300;
 }
 
-/* Estilo para botão desabilitado */
 #btn-imprimir-selecionados:disabled {
     background-color: #cccccc;
     color: #666666;
     cursor: not-allowed;
     opacity: 0.7;
     box-shadow: none;
+}
+
+
+/* CONTAINER PARA A LISTA DE MANUTENÇÕES E O RANKING DO PAINEL */
+.panel-flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Coloca lista à esquerda e ranking à direita */
+    gap: 20px;
+    align-items: flex-start;
+    margin-top: 20px;
+    width: 100%; /* Ocupa a largura total do tab-content */
+}
+
+/* Lista de manutenções (cards individuais dentro) */
+.list-manutencoes-flex-item {
+    flex: 2; /* Ocupa 2/3 do espaço */
+    min-width: 450px; /* Garante tamanho mínimo */
+    box-sizing: border-box;
+    display: flex; /* Para que os cards de manutenção dentro dele fiquem em grid/flex */
+    flex-wrap: wrap;
+    gap: 20px; /* Espaçamento entre os cards individuais de manutenção */
+    justify-content: flex-start; /* Alinha os cards à esquerda */
+}
+
+/* Estilo para os CARTÕES INDIVIDUAIS de manutenção (dentro de #listaManutencoes) */
+/* Este é o seu estilo original para os cards de manutenção */
+.list-manutencoes-flex-item .card {
+    background: #005d95; /* Cor escura do seu card original */
+    color: #fff;
+    border-radius: 14px;
+    padding: 25px 20px;
+    width: 270px; /* Mantém largura fixa para os cards */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+    transition: transform 0.3s ease;
+    margin: 0; /* A margem entre eles é controlada pelo gap do pai */
+}
+
+.list-manutencoes-flex-item .card:hover {
+    transform: scale(1.05);
+}
+
+/* Ranking de Falhas Atuais no Painel */
+.ranking-flex-item {
+    flex: 1; /* Ocupa 1/3 do espaço */
+    min-width: 280px; /* Tamanho mínimo para o ranking */
+    max-width: 30%; /* Limita para não ficar muito largo */
+    box-sizing: border-box;
+    /* Já tem a classe .card no HTML para styling (fundo azul, texto branco) */
+}
+
+/* SLA: borda lateral colorida para indicar tempo */
+.sla-verde {
+    border-left: 5px solid #28a745; /* verde (SLA dentro do tempo) */
+}
+
+.sla-amarelo {
+    border-left: 5px solid #ffc107; /* amarelo (SLA próximo do limite) */
+}
+
+.sla-vermelho {
+    border-left: 5px solid #dc3545; /* vermelho (SLA estourado) */
+}
+
+.sla-timer {
+    font-weight: bold;
+    margin-top: 8px;
+    font-size: 0.95rem;
+    display: block;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+}
+
+/* Dropdown para editar status */
+.status-select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    border-radius: 8px;
+    font-size: 1rem;
+    border: none;
+    background-color: #eaf2a1;
+    color: #222;
+    font-weight: 600;
+}
+
+.status-select:focus {
+    outline: none;
+    box-shadow: 0 0 8px #c2db00;
+}
+
+/* Botões de edição (dentro dos cards de manutenção) */
+.botoes-edicao {
+    margin-top: 12px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.botoes-edicao button {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    /* Cor de texto branco por padrão para botões dentro de cards azuis */
+    color: #fff;
+}
+
+.botoes-edicao button:first-child { /* Editar */
+    background-color: #c2db00;
+    color: #005d95; /* Cor específica para o botão Editar */
+}
+
+.botoes-edicao button:first-child:hover {
+    background-color: #a0b300;
+}
+
+.botoes-edicao button:last-child { /* Excluir/Cancelar */
+    background-color: #dc3545; /* Vermelho para excluir/cancelar */
+}
+
+.botoes-edicao button:last-child:hover {
+    background-color: #c82333;
 }
 
 
@@ -372,87 +496,12 @@ button#btnSalvar:hover {
     box-shadow: 0 0 10px #c2db00aa;
 }
 
-/* Dropdown para editar status */
-.status-select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 6px;
-    border-radius: 8px;
-    font-size: 1rem;
-    border: none;
-    background-color: #eaf2a1;
-    color: #222;
-    font-weight: 600;
-}
-
-.status-select:focus {
-    outline: none;
-    box-shadow: 0 0 8px #c2db00;
-}
-
-/* Botões de edição */
-.botoes-edicao {
-    margin-top: 12px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.botoes-edicao button {
-    padding: 8px 14px;
-    font-size: 0.9rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.botoes-edicao button:first-child { /* Botão Editar */
-    background-color: #c2db00;
-    color: #005d95;
-}
-
-.botoes-edicao button:first-child:hover {
-    background-color: #a0b300;
-}
-.botoes-edicao button:last-child { /* Botão Excluir/Cancelar */
-    background-color: #dc3545; /* Vermelho para excluir/cancelar */
-    color: #fff;
-}
-.botoes-edicao button:last-child:hover {
-    background-color: #c82333;
-}
-
-
-/* SLA: borda lateral colorida para indicar tempo */
-.sla-verde {
-    border-left: 5px solid #28a745; /* verde (SLA dentro do tempo) */
-}
-
-.sla-amarelo {
-    border-left: 5px solid #ffc107; /* amarelo (SLA próximo do limite) */
-}
-
-.sla-vermelho {
-    border-left: 5px solid #dc3545; /* vermelho (SLA estourado) */
-}
-
-.sla-timer {
-    font-weight: bold;
-    margin-top: 8px;
-    font-size: 0.95rem;
-    display: block;
-    color: #fff;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
-}
-
 /* Paginação */
 .paginacao {
     display: flex;
     justify-content: center;
     gap: 8px;
-    margin: 20px auto; /* Centraliza a paginação */
+    margin: 20px auto;
     user-select: none;
     max-width: 900px;
 }
@@ -474,173 +523,49 @@ button#btnSalvar:hover {
 }
 
 
-/* --- LAYOUTS FLEXBOX REFINADOS (PARA index.html) --- */
-
-/* CADASTRO TAB */
-.cadastro-flex-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; /* Centraliza os cards quando há espaço */
-    gap: 20px;
-    align-items: flex-start;
-}
-
-.form-container-flex-item {
-    flex: 1; /* Permite que ambos os cards (formulário e especificações) cresçam */
-    min-width: 320px; /* Garante que não fiquem muito pequenos */
-    max-width: 48%; /* Limita para que caibam dois por linha */
-    box-sizing: border-box;
-}
-
-/* PAINEL TAB */
-.panel-flex-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; /* Espaça a lista e o ranking */
-    gap: 20px;
-    align-items: flex-start;
-    margin-top: 20px;
-}
-
-.list-manutencoes-flex-item {
-    flex: 2; /* A lista de manutenções ocupa mais espaço */
-    min-width: 400px; /* Garante tamanho mínimo para a lista */
-    box-sizing: border-box;
-    /* Remover background-color, border, padding, box-shadow daqui se seus 'cards' de manutenção já tiverem isso */
-    /* Se os cards de manutenção são os elementos filhos, o flex-item em si não precisa ser um card visual */
-    /* Se ele deve conter os cards, podemos remover os estilos de card dele ou dar um background transparente */
-    /* Pelo seu HTML, parece que ele É o container dos cards, então vou remover estilos de card daqui */
-    background-color: transparent; /* Certifique-se que não sobrescreva o estilo dos cards internos */
-    border: none;
-    padding: 0;
-    box-shadow: none;
-    /* Ajuste display para os cards internos */
-    display: flex; /* Para que os cards de manutenção dentro dele fiquem em grid/flex */
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: flex-start;
-}
-
-.ranking-flex-item {
-    flex: 1; /* O ranking ocupa menos espaço */
-    min-width: 280px; /* Tamanho mínimo para o ranking */
-    max-width: 30%; /* Limita para não ficar muito largo */
-    box-sizing: border-box;
-    /* Já tem a classe .card no HTML para styling de fundo e sombra */
-}
-
-
-/* RELATÓRIOS TAB */
+/* --- LAYOUT DA ABA RELATÓRIOS --- */
 .relatorios-main-and-ranking-wrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 20px;
     align-items: flex-start;
-    margin-top: 20px; /* Consistente com o painel */
+    width: 100%; /* Ocupa a largura total do tab-content */
 }
 
 .relatorios-main-content {
     flex: 2; /* Conteúdo principal dos relatórios ocupa mais espaço */
     min-width: 400px;
     box-sizing: border-box;
-    /* Já tem a classe .card no HTML para styling de fundo e sombra */
+    /* Adicione estilos de card se quiser que este container seja um card */
+    background: rgba(0, 93, 149, 0.85); /* Exemplo: se este também for um card azul */
+    color: #fff;
+    border-radius: 12px;
+    padding: 25px 30px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.25);
 }
+
+.relatorios-main-content h2 {
+    color: #fff; /* Título dentro do card azul */
+}
+
+.relatorios-main-content .filtros-container label {
+    color: #fff; /* Labels dos filtros dentro do card azul */
+}
+
 
 .ranking-mensal-relatorio {
     flex: 1; /* Ranking mensal ocupa menos espaço */
     min-width: 280px;
     max-width: 30%; /* Consistente com o ranking do painel */
     box-sizing: border-box;
-    /* Já tem a classe .card no HTML para styling de fundo e sombra */
+    /* Já tem a classe .card no HTML para styling (fundo azul, texto branco) */
 }
 
-
-/* --- REMOÇÃO DE DUPLICAÇÕES E CONFLITOS --- */
-
-/* A classe .container já está sendo usada para algo no seu CSS.
-   No HTML do Painel, você tem 'list-manutencoes-flex-item'.
-   Se 'container' era para os cards de manutenção, substitua todas as instâncias por 'list-manutencoes-flex-item'
-   ou renomeie o '.container' se for um estilo geral de agrupamento.
-   Por agora, vou comentar o .container para evitar conflitos com a nova estrutura flex.
-*/
-/*
-.container {
-    margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
-    max-width: 900px;
-}
-*/
-
-/* Media Queries (Unificadas e Ajustadas) */
-@media (max-width: 900px) {
-    /* Adaptação para telas menores, empilhando os itens */
-    .cadastro-flex-container,
-    .panel-flex-container,
-    .relatorios-main-and-ranking-wrapper {
-        flex-direction: column;
-        align-items: stretch; /* Estica os itens para preencher a largura disponível */
-        justify-content: center; /* Centraliza a coluna */
-    }
-
-    /* Redefine larguras máximas para 100% em telas menores */
-    .form-container-flex-item,
-    .list-manutencoes-flex-item,
-    .ranking-flex-item,
-    .relatorios-main-content,
-    .ranking-mensal-relatorio {
-        max-width: 100%;
-        margin: 10px auto; /* Centraliza e adiciona margem vertical */
-    }
-
-    .filtros-container {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px; /* Ajusta o gap para empilhamento */
-    }
-
-    .filtro-grupo {
-        width: 100%;
-        min-width: auto; /* Remove min-width para flexibilidade total */
-    }
-
-    /* Otimizações específicas para elementos */
-    .logout-btn {
-        margin-top: 10px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
-
-/* @media(max-width: 600px) - Integrado na media query de 900px para simplificação */
-/* Os estilos abaixo foram ajustados e movidos para a media query de 900px ou estilos base */
-/*
-@media(max-width: 600px) {
-    .form-container {
-        width: 95%;
-    }
-    .card {
-        width: 90%;
-    }
-    .filtros-container {
-        justify-content: center;
-        gap: 10px;
-    }
-    .filtro-grupo {
-        min-width: 120px;
-    }
-}
-*/
-
-/* Outros ajustes finos */
 .relatorio-message-center {
     text-align: center;
     margin-top: 30px;
-    color: #666; /* Cor escura para texto em fundo claro */
+    color: #fff; /* Texto em fundo azul do relatorios-main-content */
 }
 
 .ranking-list-padding {
@@ -653,7 +578,7 @@ button#btnSalvar:hover {
 }
 
 .filtro-ranking-mensal label {
-    color: #005d95; /* Cor para labels em fundo claro */
+    color: #fff; /* Labels do filtro de ranking mensal */
     font-weight: bold;
 }
 
@@ -663,16 +588,48 @@ button#btnSalvar:hover {
     border: none;
     width: auto;
     flex-grow: 1;
-    background-color: #eaf2a1; /* Consistente com outros selects */
+    background-color: #eaf2a1;
     color: #222;
 }
 
-/* User Info Display - Ajustado para ser mais flexível */
-.user-info-display {
-    display: block; /* Mude para block ou flex se quiser que apareça */
-    color: #fff;
-    text-align: right;
-    width: 100%;
-    max-width: 900px;
-    margin-bottom: 10px;
+
+/* --- MEDIA QUERIES PARA RESPONSIVIDADE --- */
+@media (max-width: 900px) {
+    /* Empilha os itens verticalmente em telas menores */
+    .cadastro-flex-container,
+    .panel-flex-container,
+    .relatorios-main-and-ranking-wrapper {
+        flex-direction: column;
+        align-items: stretch; /* Estica os itens para preencher a largura disponível */
+        justify-content: center;
+    }
+
+    /* Redefine larguras máximas para 100% em telas pequenas */
+    .form-container-flex-item,
+    .list-manutencoes-flex-item,
+    .ranking-flex-item,
+    .relatorios-main-content,
+    .ranking-mensal-relatorio {
+        max-width: 100%;
+        min-width: auto; /* Permite que ocupe a largura total */
+        margin: 10px auto; /* Centraliza e adiciona margem vertical */
+    }
+
+    /* Ajustes para os cards individuais dentro da lista de manutenção */
+    .list-manutencoes-flex-item .card {
+        width: 100%; /* Ocupa a largura total disponível no pai flexível */
+        max-width: 400px; /* Mas não excede um tamanho razoável */
+        margin: 0 auto; /* Centraliza os cards individualmente quando empilhados */
+    }
+
+    .filtros-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .filtro-grupo {
+        width: 100%;
+        min-width: auto;
+    }
 }
