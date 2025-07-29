@@ -1,15 +1,11 @@
-/// --- VERIFICA LOGIN ---
+// VERIFICA LOGIN 
 if (!localStorage.getItem('role')) {
     // Se não estiver logado (ou se as chaves do localStorage não existirem), redireciona para login.
     window.location.href = "login.html";
 }
-// --- FIM VERIFICA LOGIN ---
-
-// --- INÍCIO: INTEGRAÇÃO SUPABASE ---
-const supabaseUrl = 'https://jnwexcchxzjbjdfwgfbt.supabase.co'; // SUA URL DO PROJETO SUPABASE
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impud2V4Y2NoeHpqYmpkZndnZmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MzA1MTYsImV4cCI6MjA2OTMwNjUxNn0.bTQ9AxnD9qJZkaaVb6w0VomR6yAp6ye4SIEwQ52mYBs'; // SUA ANON PUBLIC KEY SUPABASE
+const supabaseUrl = 'https://jnwexcchxzjbjdfwgfbt.supabase.co'; 
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impud2V4Y2NoeHpqYmpkZndnZmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MzA1MTYsImV4cCI6MjA2OTMwNjUxNn0.bTQ9AxnD9qJZkaaVb6w0VomR6yAp6ye4SIEwQ52mYBs'; 
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-// --- FIM: INTEGRAÇÃO SUPABASE ---
 
 let maquinas = {}; // Objeto para armazenar os dados das máquinas carregados do Supabase
 // Se o usuário não estiver logado (e, portanto, redirecionado), essas linhas nem serão executadas.
@@ -26,11 +22,11 @@ let ordenarPor = 'maisRecente'; // padrão ordenar do mais recente para o mais a
 // Conjunto para armazenar os IDs dos cards selecionados no painel (para imprimir OS)
 const selectedCards = new Set();
 
-// NOVO: Variáveis para controle da seleção múltipla no formulário de cadastro
+// Variáveis para controle da seleção múltipla no formulário de cadastro
 let isMultiSelectActive = false;
 let selectedMachinesForForm = new Set(); // Armazenará os IDs das máquinas selecionadas no formulário
 
-// LISTA DE TÉCNICOS FIXOS (em ordem alfabética) ---
+// LISTA DE TÉCNICOS FIXOS 
 const listaTecnicosFixos = [
     "Cláudio",
     "Edgar",
@@ -40,7 +36,6 @@ const listaTecnicosFixos = [
     "Sérgio",
     "Wilherson"
 ].sort(); // Já ordenada alfabeticamente
-// --- FIM NOVO: LISTA DE TÉCNICOS FIXOS ---
 
 // --- ESPECIFICAÇÕES DAS MÁQUINAS
 const maquinaEspecificacoes = {
@@ -79,8 +74,7 @@ const maquinaEspecificacoes = {
     "compressor01": { nome: "Compressor Parafuso 40HP", marca: "INGERSOLRAND", modelo: "R30N - Tas", potencia: "40HP" },
     "compressor02": { nome: "Compressor Atlas Copco 425L - 02", marca: "ATLAS COPCO", modelo: "AT 15/60 - 425L", capacidade: "425L" },
     "compressor03": { nome: "Compressor Chiaperini 425L - 03", marca: "CHIAPERINI", modelo: "CJ 120 APW", capacidade: "425L" },
-    // Adicionando a opção "Outros"
-    "outros": { nome: "Outros", marca: "Diversas", modelo: "Variado", capacidade: "Variada" }
+    "outros": { nome: "Outros", marca: "Diversas", modelo: "Variado", capacidade: "Variada" }//Para OS que não seja sobre maquina
 };
 
 /**
@@ -98,14 +92,11 @@ function formatarNomeMaquinaCurto(maquinaId) {
         const tipoFormatado = tipo.charAt(0).toUpperCase() + tipo.slice(1);
         return `${tipoFormatado} ${numero}`;
     }
-    // Adiciona o tratamento para "outros"
     if (maquinaId === "outros") {
         return "Outros";
     }
     return maquinaId; // Retorna o ID original se não conseguir formatar
 }
-
-//  Funções de UI básicas
 
 // Preenche o select de máquinas no formulário de registro E na aba de relatórios
 function preencherSelectMaquinas() {
@@ -144,29 +135,25 @@ function preencherSelectMaquinas() {
         optionRelatorio.textContent = formatarNomeMaquinaCurto(id);
         selectMaquinaRelatorio.appendChild(optionRelatorio);
     }
-    // NOVO: Renderiza a seleção inicial para o formulário (nenhuma)
+    // Renderiza a seleção inicial para o formulário (nenhuma)
     renderSelectedMachinesForForm();
 }
 
-// Mostra a aba correta
 function showTab(tabId, event) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
     document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
     document.getElementById(tabId).classList.add('active');
     if (event) event.target.classList.add('active');
 
-    // Se for a aba do Painel, atualize o conteúdo
     if (tabId === 'painel') {
         atualizarPainel();
     }
-    // Se for a aba de Relatórios, atualize o ranking mensal
     if (tabId === 'relatorios') {
         atualizarRankingMensal();
     }
-    // NOVO: Se sair da aba de Cadastro, desativar modo multi-seleção
     if (tabId !== 'cadastro') {
         if (isMultiSelectActive) {
-            toggleMultiSelectMode(); // Desativa o modo se estiver ativo
+            toggleMultiSelectMode(); 
         }
     }
 }
@@ -198,7 +185,7 @@ function logout() {
 
 function limparCampos() {
     const selectMaquina = document.getElementById('maquina');
-    // NOVO: Limpa a seleção interna do Set e atualiza o select
+    // Limpa a seleção interna do Set e atualiza o select
     selectedMachinesForForm.clear();
     renderSelectedMachinesForForm(); // Isso vai desmarcar todas as opções visivelmente
     selectMaquina.value = ''; // Garante que a opção "-- Escolha --" seja mostrada
@@ -211,7 +198,7 @@ function limparCampos() {
         <h3>Especificações da Máquina</h3>
         <p>Selecione uma máquina para ver as especificações.</p>
     `;
-    // NOVO: Desativar modo multi-seleção se estiver ativo
+    // Desativar modo multi-seleção se estiver ativo
     if (isMultiSelectActive) {
         toggleMultiSelectMode();
     }
@@ -234,7 +221,7 @@ function formatarTempo(minutos) {
     }
 }
 
-// --- Funções de Manutenção (Painel) ---
+//  Funções de Manutenção (Painel) 
 function atualizarPainel() {
     const listaManutencoes = document.getElementById('listaManutencoes');
     if (!listaManutencoes) {
@@ -274,7 +261,7 @@ function atualizarPainel() {
             if (dataRegistro.getTime() !== filtroData.getTime()) return false;
         }
 
-        // filtro texto na máquina, problema e NOVO: numero_os (case insensitive)
+        // filtro texto na máquina, problema e numero_os (case insensitive)
         if (textoFiltro) {
             const nomeMaquinaCurto = formatarNomeMaquinaCurto(dados.maquina).toLowerCase();
             const problemaLower = dados.problema.toLowerCase();
@@ -307,7 +294,7 @@ function atualizarPainel() {
         const card = document.createElement('div');
         card.className = 'card';
 
-        // **NOVO:** Adiciona classe 'card-impresso' se o item já foi impresso
+        // Adiciona classe 'card-impresso' se o item já foi impresso
         if (dados.impresso) {
             card.classList.add('card-impresso');
         }
@@ -324,7 +311,7 @@ function atualizarPainel() {
 
         const nomeFormatadoCurto = formatarNomeMaquinaCurto(dados.maquina);
 
-        // **NOVO:** Desabilita o checkbox se o card já estiver impresso
+        //Desabilita o checkbox se o card já estiver impresso
         const checkboxDisabled = dados.impresso ? 'disabled' : '';
         const checkboxChecked = selectedCards.has(Number(id)) ? 'checked' : '';
 
@@ -347,9 +334,6 @@ function atualizarPainel() {
         // Exibir o último item do histórico APENAS SE HOUVER MAIS DE UMA ENTRADA
         // OU SE A ÚLTIMA ENTRADA NÃO FOR EXATAMENTE A ENTRADA DE REGISTRO INICIAL
         if (dados.historico && dados.historico.length > 0) {
-            // Encontra a última entrada no histórico que representa uma ALTERAÇÃO
-            // Filtra o histórico para encontrar alterações de status (exceto a primeira se for 'a fazer')
-            // Ou, de forma mais simples, pega a última entrada SE HOUVER MAIS DE UMA OU SE O STATUS NÃO FOR 'a fazer'
             const historicoFiltradoParaExibicao = dados.historico.filter((entry, index) => {
                 // Se for a primeira entrada, só considera se o status for diferente de 'a fazer'
                 // ou se houver mais de uma entrada
@@ -613,8 +597,6 @@ async function salvarEdicao(id) {
     }
 }
 
-// Esta função apenas atualiza o status no cache, não no Supabase.
-// A atualização no Supabase ocorre em 'salvarEdicao'.
 function alterarStatusCache(id, novoStatus) {
     if (maquinas[id]) {
         maquinas[id].status = novoStatus; // Mantém a alteração visual antes de salvar
@@ -672,7 +654,7 @@ function atualizarRanking() {
     }
 }
 
-// --- NOVAS FUNÇÕES PARA RANKING MENSAL PERSISTENTE ---
+// FUNÇÕES PARA RANKING MENSAL PERSISTENTE 
 
 async function salvarRankingMensal() {
     const hoje = new Date();
@@ -798,19 +780,19 @@ async function atualizarRankingMensal() {
     // Carrega TODOS os rankings para popular o filtro e depois filtrar
     console.log("[DEBUG] Chamando carregarRankingsMensais...");
     const todosRankings = await carregarRankingsMensais();
-    console.log("[DEBUG] Retorno de carregarRankingsMensais (todosRankings):", todosRankings, "Tipo:", typeof todosRankings); // NOVO LOG
+    console.log("[DEBUG] Retorno de carregarRankingsMensais (todosRankings):", todosRankings, "Tipo:", typeof todosRankings); 
 
     const rankingsSeguros = Array.isArray(todosRankings) ? todosRankings : [];
-    console.log("[DEBUG] Valor de rankingsSeguros:", rankingsSeguros, "É array?", Array.isArray(rankingsSeguros)); // NOVO LOG
+    console.log("[DEBUG] Valor de rankingsSeguros:", rankingsSeguros, "É array?", Array.isArray(rankingsSeguros)); 
 
     // Preenche as opções do select de filtro de ranking mensal (se ainda não estiverem preenchidas)
     const mesesDisponiveis = [...new Set(rankingsSeguros.map(item => item.mes).filter(mes => mes))].sort().reverse();
-    console.log("[DEBUG] Meses disponíveis (mesesDisponiveis):", mesesDisponiveis, "É array?", Array.isArray(mesesDisponiveis)); // NOVO LOG
+    console.log("[DEBUG] Meses disponíveis (mesesDisponiveis):", mesesDisponiveis, "É array?", Array.isArray(mesesDisponiveis)); 
 
 
     // Condição para preencher/atualizar as opções do select
     if (selectMesRanking.options.length === 0 || (selectMesRanking.options.length - 1 !== mesesDisponiveis.length && mesesDisponiveis.length > 0)) {
-        console.log("[DEBUG] Preenchendo select de meses..."); // NOVO LOG
+        console.log("[DEBUG] Preenchendo select de meses..."); 
         selectMesRanking.innerHTML = '';
         const optionDefault = document.createElement('option');
         optionDefault.value = '';
@@ -874,8 +856,6 @@ function formatarMesAno(chaveMes) {
 }
 
 
-// --- FIM FUNÇÕES PARA RANKING MENSAL PERSISTENTE ---
-
 //FUNÇÕES PARA RELATÓRIOS (PDF)
 async function gerarRelatorioPDF(idsParaImprimir = null) {
     console.log("gerarRelatorioPDF: idsParaImprimir recebidos:", idsParaImprimir);
@@ -916,7 +896,6 @@ async function gerarRelatorioPDF(idsParaImprimir = null) {
         console.error("Erro ao carregar logo:", error);
         imgElement = null; // Garante que imgElement não seja um objeto inválido
     }
-    // FIM DO CÓDIGO PARA LOGO
 
 
     // Função auxiliar para adicionar a logo e o título em uma página
@@ -1052,13 +1031,13 @@ async function gerarRelatorioPDF(idsParaImprimir = null) {
         }
 
         if (isGerandoOS) {
-            y += 55; // Avança Y para os campos manuais
+            y += 55; // 
 
-            doc.setFontSize(10); // Fonte menor para os títulos dos campos
+            doc.setFontSize(10); // 
             doc.text('Peças Trocadas / Serviço Executado:', 14, y);
             y += 5;
             for (let i = 0; i < 4; i++) { // 4 linhas
-                doc.line(14, y + (i * 5), 196, y + (i * 5)); // Desenha a linha
+                doc.line(14, y + (i * 5), 196, y + (i * 5)); // 
             }
             y += 25; // Espaço após as linhas de peças/serviço
 
@@ -1081,10 +1060,10 @@ async function gerarRelatorioPDF(idsParaImprimir = null) {
 
         // Separador visual entre os itens, se houver mais de um
         if (index < dadosFiltrados.length - 1) {
-            doc.setDrawColor(150); // Cor cinza para o separador
-            doc.line(14, y, 196, y); // Linha separadora
-            doc.setDrawColor(0); // Volta para a cor preta
-            y += 10; // Espaço após o separador
+            doc.setDrawColor(150); 
+            doc.line(14, y, 196, y); 
+            doc.setDrawColor(0); 
+            y += 10; 
         }
     });
 
@@ -1095,7 +1074,7 @@ async function gerarRelatorioPDF(idsParaImprimir = null) {
 
     // Limpa a seleção após gerar o PDF (apenas para a opção de cards selecionados)
     if (isGerandoOS) {
-        // **NOVO:** Atualiza o campo 'impresso' no Supabase para os cards que foram impressos
+        //  Atualiza o campo 'impresso' no Supabase para os cards que foram impressos
         await marcarCardsComoImpressos(Array.from(selectedCards));
         selectedCards.clear();
         await carregarDoSupabase(); // Recarrega os dados para que a UI reflita a mudança
@@ -1103,7 +1082,7 @@ async function gerarRelatorioPDF(idsParaImprimir = null) {
     }
 }
 
-// **NOVA FUNÇÃO:** Para marcar os cards como impressos no Supabase
+// Para marcar os cards como impressos no Supabase
 async function marcarCardsComoImpressos(ids) {
     if (ids.length === 0) {
         return;
@@ -1133,8 +1112,7 @@ async function salvarNoSupabase(maquina, problema, status, data, hora, usuario) 
         dataHora: new Date().toLocaleDateString('pt-BR') + ' ' + new Date().toLocaleTimeString('pt-BR', { hour12: false })
     }];
 
-    // Aqui, `maquina` agora pode ser um array de IDs.
-    // Precisamos criar um registro para CADA máquina selecionada.
+
     const registrosParaInserir = maquina.map(maqId => ({
         maquina: maqId,
         problema,
@@ -1142,7 +1120,7 @@ async function salvarNoSupabase(maquina, problema, status, data, hora, usuario) 
         criado_em,
         usuario,
         historico: historicoInicial,
-        impresso: false // **NOVO:** Define 'impresso' como false por padrão ao criar um novo registro
+        impresso: false // Define 'impresso' como false por padrão ao criar um novo registro
     }));
 
     const { data: insertedData, error } = await supabase
@@ -1186,7 +1164,7 @@ async function carregarDoSupabase() {
             hora: horaStr,
             usuario: item.usuario || 'Desconhecido',
             historico: item.historico || [], // Garante que historico seja um array
-            impresso: item.impresso || false, // **NOVO:** Carrega o campo 'impresso'
+            impresso: item.impresso || false, // Carrega o campo 'impresso'
             editando: false
         };
     });
@@ -1222,7 +1200,7 @@ function toggleMultiSelectMode() {
     updateMachineSpecsDisplay(Array.from(selectedMachinesForForm)); // Atualiza o card de especificações
 }
 
-// NOVO: Função para renderizar as opções selecionadas no select (visualmente)
+//  Função para renderizar as opções selecionadas no select (visualmente)
 function renderSelectedMachinesForForm() {
     const select = document.getElementById('maquina');
     Array.from(select.options).forEach(option => {
@@ -1240,7 +1218,7 @@ function renderSelectedMachinesForForm() {
 }
 
 
-// NOVO: Função para atualizar o display de especificações da máquina
+//Função para atualizar o display de especificações da máquina
 function updateMachineSpecsDisplay(maquinasSelecionadas) {
     const cardEspecificacoes = document.getElementById('cardEspecificacoesCadastro');
     if (!cardEspecificacoes) return;
@@ -1279,7 +1257,7 @@ function updateMachineSpecsDisplay(maquinasSelecionadas) {
 }
 
 
-// --- DOMContentLoaded e Event Listeners ---
+//  DOMContentLoaded e Event Listeners 
 document.addEventListener('DOMContentLoaded', async () => {
     // Esconde a div de informações do usuário no carregamento
     const userInfoDisplay = document.getElementById('userInfoDisplay');
@@ -1316,7 +1294,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             btnSalvar.disabled = true;
             btnSalvar.textContent = 'Salvando...'; // Feedback visual
 
-            // NOVO: Pega as máquinas selecionadas do Set
+            // Pega as máquinas selecionadas do Set
             const maquinasSelecionadasArray = Array.from(selectedMachinesForForm);
 
             const problema = document.getElementById('problema').value.trim();
@@ -1387,7 +1365,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const btnImprimirSelecionados = document.getElementById('btn-imprimir-selecionados');
     if (btnImprimirSelecionados) {
         btnImprimirSelecionados.addEventListener('click', () => {
-            // CONSOLE.LOG ADICIONADO AQUI
             console.log("Evento de clique no botão 'Imprimir Selecionados'. selectedCards:", selectedCards);
 
             if (selectedCards.size > 0) {
@@ -1407,13 +1384,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         filtroMesRanking.addEventListener('change', atualizarRankingMensal);
     }
 
-    // NOVO: Event Listener para o botão "Ativar Seleção Múltipla"
+    // Event Listener para o botão "Ativar Seleção Múltipla"
     const btnAtivarSelecaoMultipla = document.getElementById('btnAtivarSelecaoMultipla');
     if (btnAtivarSelecaoMultipla) {
         btnAtivarSelecaoMultipla.addEventListener('click', toggleMultiSelectMode);
     }
 
-    // NOVO: Event Listener para o select de máquinas no formulário de cadastro
+    // Event Listener para o select de máquinas no formulário de cadastro
     const selectMaquinaCadastro = document.getElementById('maquina');
     if (selectMaquinaCadastro) {
         selectMaquinaCadastro.addEventListener('change', (event) => {
@@ -1446,7 +1423,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 selectMaquinaCadastro.value = "";
             }
 
-            // Impede que o navegador tente selecionar apenas um item se estivermos no modo de seleção múltipla personalizada
             if (isMultiSelectActive) {
                 event.preventDefault(); // Impede o comportamento padrão do select
             }
