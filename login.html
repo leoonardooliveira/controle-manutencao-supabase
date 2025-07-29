@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    </head>
+</head>
 <body>
     <div class="login-container">
         <img src="logo-sao-geraldo.png" alt="Logo São Geraldo Service" class="logo-login">
@@ -23,14 +23,14 @@
     </div>
 
     <script>
-        // CHAVES DO SUPABASE 
+        // CHAVES DO SUPABASE
         // SUBSTITUA ESTES VALORES PELAS SUAS CHAVES REAIS DO SUPABASE!
-        const supabaseUrl = 'https://jnwexcchxzjbjdfwgfbt.supabase.co'; 
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impud2V4Y2NoeHpqYmpkZndnZmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MzA1MTYsImV4cCI6MjA2OTMwNjUxNn0.bTQ9AxnD9qJZkaaVb6w0VomR6yAp6ye4SIEwQ52mYBs'; 
+        const supabaseUrl = 'https://jnwexcchxzjbjdfwgfbt.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impud2V4Y2NoeHpqYmpkZndnZmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MzA1MTYsImV4cCI6MjA2OTMwNjUxNn0.bTQ9AxnD9qJZkaaVb6w0VomR6yAp6ye4SIEwQ52mYBs';
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // DOMÍNIO INTERNO PARA O LOGIN 
-        const DOMINIO_INTERNO_PARA_LOGIN = '@gmail.com'; 
+        // DOMÍNIO INTERNO PARA O LOGIN
+        const DOMINIO_INTERNO_PARA_LOGIN = '@gmail.com';
 
         // Função de Login que será chamada quando o botão "Entrar" for clicado
         async function login() {
@@ -50,7 +50,7 @@
             loginButton.disabled = true;
             loginButton.textContent = 'Entrando...';
 
-            //Converte o username em um formato de e-mail para o Supabase 
+            // Converte o username em um formato de e-mail para o Supabase
             const emailParaSupabase = usernameInput + DOMINIO_INTERNO_PARA_LOGIN;
 
             // Chama a função de login do Supabase com o e-mail "montado" e a senha
@@ -68,7 +68,7 @@
                 }
                 loginErrorDisplay.innerText = errorMessage; // Exibe o erro na div de erro do HTML
                 Swal.fire('Erro de Login!', errorMessage, 'error'); // Exibe um alerta mais amigável
-                
+
                 // Reabilita o botão e volta o texto original
                 loginButton.disabled = false;
                 loginButton.textContent = 'Entrar';
@@ -76,5 +76,42 @@
                 // Login bem-sucedido!
                 console.log("Login bem-sucedido:", data.user);
 
-            
-                
+                // --- NOVO CÓDIGO AQUI PARA TRATAR O SUCESSO ---
+
+                // Tenta buscar a role do usuário no banco de dados (ajuste a tabela e coluna conforme seu schema)
+                const { data: userData, error: userError } = await supabase
+                    .from('perfis') // MUDAR PARA O NOME DA SUA TABELA DE PERFIS/ROLES
+                    .select('role')   // MUDAR PARA O NOME DA SUA COLUNA DE ROLE
+                    .eq('user_id', data.user.id) // O user.id é o ID do usuário no Supabase Auth
+                    .single();
+
+                if (userError) {
+                    console.error("Erro ao buscar role do usuário:", userError);
+                    Swal.fire('Erro!', 'Não foi possível carregar o perfil do usuário. Tente novamente.', 'error');
+                    // Opcional: deslogar se não conseguir carregar o perfil
+                    await supabase.auth.signOut();
+                    loginButton.disabled = false;
+                    loginButton.textContent = 'Entrar';
+                    return;
+                }
+
+                if (userData && userData.role) {
+                    // Armazena informações no localStorage
+                    localStorage.setItem('nomeUsuario', usernameInput); // O username que o usuário digitou
+                    localStorage.setItem('role', userData.role); // A role buscada do banco de dados
+                    localStorage.setItem('userEmail', emailParaSupabase); // O email usado para login
+
+                    // Redireciona para a página principal da aplicação
+                    window.location.href = "index.html"; // Assumindo que sua página principal é index.html
+                } else {
+                    console.error("Role do usuário não encontrada ou inválida.");
+                    Swal.fire('Erro!', 'Perfil de usuário incompleto ou inválido. Contate o administrador.', 'error');
+                    await supabase.auth.signOut(); // Desloga o usuário se a role não for encontrada
+                    loginButton.disabled = false;
+                    loginButton.textContent = 'Entrar';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
