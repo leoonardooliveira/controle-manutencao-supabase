@@ -10,7 +10,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #0083c8 0%, #005d95 100%);
     min-height: 100vh;
-    color: #fff;
+    color: #fff; /* Cor do texto padrão do body (para elementos soltos, como o h1) */
     padding: 30px 15px;
     display: flex;
     flex-direction: column;
@@ -184,6 +184,13 @@ h2 {
     color: #fff; /* Voltou a ser branco */
 }
 
+/* Parágrafos e outros textos dentro dos cards */
+.card p,
+.card ul,
+.card li {
+    color: #fff; /* Garante texto branco */
+}
+
 /* Labels dentro dos cards (formulário, especificações) */
 .card label {
     display: block;
@@ -257,6 +264,36 @@ button#btnSalvar:hover {
     background-color: #a0b300;
     color: #003e63;
     box-shadow: 0 8px 14px rgba(160,179,0,1);
+}
+
+/* NOVO: Estilo para o botão de ativar seleção múltipla */
+#btnAtivarSelecaoMultipla {
+    background-color: #007bff; /* Azul padrão */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px; /* Espaçamento acima do botão */
+    transition: background-color 0.3s ease;
+    font-size: 0.9em;
+}
+
+#btnAtivarSelecaoMultipla.active {
+    background-color: #28a745; /* Verde quando ativo */
+}
+
+#btnAtivarSelecaoMultipla:hover {
+    background-color: #0056b3;
+}
+#btnAtivarSelecaoMultipla.active:hover {
+    background-color: #218838;
+}
+
+/* NOVO: Estilo para a seleção múltipla do select (apenas visual) */
+.card select.multi-select-active option:checked {
+    background-color: #005d95; /* Cor de fundo da opção selecionada */
+    color: #fff; /* Cor do texto da opção selecionada */
 }
 
 
@@ -376,6 +413,24 @@ button#btnSalvar:hover {
     margin: 0; /* A margem entre eles é controlada pelo gap do pai */
 }
 
+/* NOVO: Estilo para cards que já foram impressos */
+.card.card-impresso {
+    opacity: 0.7; /* Ou qualquer estilo que indique que foi impresso */
+    border: 2px solid #c2db00; /* Exemplo: borda amarela (combinando com o tema) */
+    background-color: rgba(0, 93, 149, 0.5); /* Fundo um pouco mais transparente para indicar "passado" */
+}
+
+.card.card-impresso .card-header h3 {
+    text-decoration: line-through; /* Riscar o texto da máquina */
+    color: #bbbbbb; /* Cor mais clara para indicar que foi processado */
+}
+
+.card.card-impresso .card-checkbox {
+    cursor: not-allowed; /* Mudar cursor para indicar que não é clicável */
+    opacity: 0.5; /* Deixa o checkbox um pouco mais transparente */
+}
+
+
 .list-manutencoes-flex-item .card:hover {
     transform: scale(1.05);
 }
@@ -449,7 +504,7 @@ button#btnSalvar:hover {
     color: #fff;
 }
 
-.botoes-edicao button:first-child { /* Editar */
+.botoes-edicao button:first-child { /* Editar / Salvar */
     background-color: #c2db00;
     color: #005d95; /* Cor específica para o botão Editar */
 }
@@ -533,13 +588,14 @@ button#btnSalvar:hover {
     width: 100%; /* Ocupa a largura total do tab-content */
 }
 
+/* O container principal de filtros e botões do relatório também deve ser um card */
 .relatorios-main-content {
     flex: 2; /* Conteúdo principal dos relatórios ocupa mais espaço */
     min-width: 400px;
     box-sizing: border-box;
-    /* Adicione estilos de card se quiser que este container seja um card */
+    /* Adicionado estilos de card */
     background: rgba(0, 93, 149, 0.85); /* Exemplo: se este também for um card azul */
-    color: #fff;
+    color: #fff; /* Texto branco */
     border-radius: 12px;
     padding: 25px 30px;
     box-shadow: 0 8px 15px rgba(0,0,0,0.25);
@@ -547,6 +603,7 @@ button#btnSalvar:hover {
 
 .relatorios-main-content h2 {
     color: #fff; /* Título dentro do card azul */
+    margin-top: 0; /* Remove margem superior extra se já é um card */
 }
 
 .relatorios-main-content .filtros-container label {
