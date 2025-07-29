@@ -546,4 +546,155 @@ button#btnSalvar:hover {
     .filtro-grupo {
         min-width: 120px;
     }
+    /* Estilos movidos de index.html */
+
+/* MEDIA QUERIES - Já existentes, mas ajustados para garantir que não haja duplicação */
+@media (max-width: 900px) {
+    #listaManutencoes {
+        justify-content: center !important;
+    }
+    #ranking, #rankingMensal { /* #rankingMensal foi movido, mas a regra ainda existe */
+        max-width: 100% !important;
+        margin-top: 20px !important;
+        margin-left: 0 !important; /* Adicionado para remover margem lateral em telas menores */
+    }
+    .filtros-container {
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+    }
+    .cadastro-container {
+        flex-direction: column;
+    }
+}
+
+/* Paginação - Já existentes, mas ajustados para garantir que não haja duplicação */
+.paginacao {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+    user-select: none;
+    /* max-width e margin: auto movidos do inline para cá */
+    max-width: 900px;
+    margin: 25px auto 40px auto;
+}
+.paginacao button {
+    background-color: #005d95;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 700;
+}
+.paginacao button.ativa {
+    background-color: #003f66;
+}
+.paginacao button.disabled {
+    background-color: #999;
+    cursor: default;
+}
+
+/* Novos estilos para substituir os inline styles no HTML */
+.user-info-display {
+    display: none; /* Substitui style="display: none;" */
+}
+
+.cadastro-flex-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.form-container-flex-item {
+    flex: 1;
+    min-width: 280px;
+}
+
+.panel-flex-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.list-manutencoes-flex-item {
+    flex: 3;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.ranking-flex-item {
+    flex: 1;
+    max-width: 280px;
+}
+
+.ranking-current-falhas {
+    background-color: rgba(0, 93, 149, 0.85);
+    border-radius: 12px;
+    padding: 15px 20px;
+    color: white;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+    height: fit-content;
+    font-weight: 600;
+    user-select: none;
+    margin-bottom: 15px;
+}
+
+.ranking-list-padding {
+    padding-left: 20px;
+}
+
+.relatorios-content-wrapper {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.relatorios-main-content {
+    flex: 3;
+    min-width: 300px;
+}
+
+.relatorio-message-center {
+    text-align: center;
+    margin-top: 30px;
+    color: #666;
+}
+
+.ranking-mensal-relatorio {
+    flex: 1;
+    max-width: 280px;
+    background-color: rgba(0, 93, 149, 0.85);
+    border-radius: 12px;
+    padding: 15px 20px;
+    color: white;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+    height: fit-content;
+    font-weight: 600;
+    user-select: none;
+}
+
+.filtro-ranking-mensal label {
+    color: white;
+    font-weight: bold;
+}
+
+.filtro-ranking-mensal select {
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    width: auto;
+    flex-grow: 1;
+}
+
+.ranking-mensal-list-margin-top {
+    padding-left: 20px;
+    margin-top: 15px;
+}
 }
