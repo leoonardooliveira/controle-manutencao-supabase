@@ -23,15 +23,12 @@
     </div>
 
     <script>
-        // --- SUAS CHAVES DO SUPABASE AQUI ---
-        // SUBSTITUA ESTES VALORES PELAS SUAS CHAVES REAIS DO SUPABASE!
-        const supabaseUrl = 'https://jnwexcchxzjbjdfwgfbt.supabase.co'; // SUA URL DO PROJETO SUPABASE
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impud2V4Y2NoeHpqYmpkZndnZmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MzA1MTYsImV4cCI6MjA2OTMwNjUxNn0.bTQ9AxnD9qJZkaaVb6w0VomR6yAp6ye4SIEwQ52mYBs'; // SUA ANON PUBLIC KEY SUPABASE
+        const supabaseUrl = 'https://jnwexcchxzjbjdfwgfbt.supabase.co'; 
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impud2V4Y2NoeHpqYmpkZndnZmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM3MzA1MTYsImV4cCI6MjA2OTMwNjUxNn0.bTQ9AxnD9qJZkaaVb6w0VomR6yAp6ye4SIEwQ52mYBs'; 
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // --- DOMÍNIO INTERNO PARA O LOGIN ---
-        // ESTE DEVE SER EXATAMENTE O MESMO DOMÍNIO QUE VOCÊ USOU PARA CRIAR OS USUÁRIOS NO SUPABASE AUTH.
-        const DOMINIO_INTERNO_PARA_LOGIN = '@saogeraldoservice.com.br'; // Confirme este valor!
+        //  DOMÍNIO INTERNO PARA O LOGIN 
+        const DOMINIO_INTERNO_PARA_LOGIN = '@saogeraldoservice.com.br'; 
 
         // Função de Login que será chamada quando o botão "Entrar" for clicado
         async function login() {
@@ -51,7 +48,7 @@
             loginButton.disabled = true;
             loginButton.textContent = 'Entrando...';
 
-            // --- AQUI A MÁGICA ACONTECE: Converte o username em um formato de e-mail para o Supabase ---
+            // Converte o username em um formato de e-mail para o Supabase 
             const emailParaSupabase = usernameInput + DOMINIO_INTERNO_PARA_LOGIN;
 
             // Chama a função de login do Supabase com o e-mail "montado" e a senha
@@ -68,7 +65,7 @@
                     errorMessage = "Usuário ou senha inválidos.";
                 }
                 loginErrorDisplay.innerText = errorMessage; // Exibe o erro na div de erro do HTML
-                Swal.fire('Erro de Login!', errorMessage, 'error'); // Exibe um alerta mais amigável
+                Swal.fire('Erro de Login!', errorMessage, 'error'); // Exibe um alerta 
                 
                 // Reabilita o botão e volta o texto original
                 loginButton.disabled = false;
@@ -78,7 +75,6 @@
                 console.log("Login bem-sucedido:", data.user);
 
                 // Armazena o nome de usuário e o papel (role) no localStorage
-                // Essas informações vêm do 'app_metadata' que você definiu ao criar o usuário no Supabase
                 localStorage.setItem('nomeUsuario', data.user.app_metadata.nomeUsuario || usernameInput); // Prioriza 'nomeUsuario' do metadata, senão usa o username digitado
                 localStorage.setItem('role', data.user.app_metadata.role || 'comum'); // Prioriza 'role' do metadata, senão define 'comum' como padrão
 
@@ -87,7 +83,7 @@
             }
         }
 
-        // --- VERIFICA SESSÃO AO CARREGAR A PÁGINA DE LOGIN ---
+        // VERIFICA SESSÃO AO CARREGAR A PÁGINA DE LOGIN 
         // Se o usuário já estiver logado (tiver uma sessão ativa no Supabase),
         // ele não precisa ver a página de login e é redirecionado para a página principal.
         document.addEventListener('DOMContentLoaded', async () => {
