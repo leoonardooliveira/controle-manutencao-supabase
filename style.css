@@ -1,296 +1,305 @@
 /* Reset básico */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #0083c8 0%, #005d95 100%);
-    min-height: 100vh;
-    color: #fff; /* Cor do texto padrão do body */
-    padding: 30px 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Alinha o conteúdo verticalmente ao centro para o login */
-    align-items: center; /* Centraliza horizontalmente */
-    margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0083c8 0%, #005d95 100%);
+  min-height: 100vh;
+  color: #fff;
+  padding: 30px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* --- ESTILOS PARA O LOGIN (TRANSFERIDOS DO HTML) --- */
-.login-container {
-    background-color: #fff; /* Alterado para branco puro, como na imagem do login */
-    padding: 30px; /* Reduzido o padding para dar mais espaço à logo */
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 350px;
-    text-align: center;
-    color: #555; /* Cor padrão para texto dentro da caixa branca do login */
-    display: block; /* Garante que o container de login esteja visível por padrão na página de login */
+/* LOGIN */
+#login-container {
+  background-color: rgba(0, 93, 149, 0.85);
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+  text-align: center;
+  display: none; /* Este display: none é para o CONTAINER do login, não para a logo que está fora dele */
 }
 
-.login-container label {
-    display: block;
-    margin: 10px 0 5px;
-    color: #555; /* Cor mais escura para o texto dentro da caixa branca */
-    font-weight: bold;
-    text-align: left;
+#login-container.active {
+  display: block;
 }
 
-.login-container input {
-    width: calc(100% - 20px); /* Ajuste para padding em navegadores mais antigos */
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    color: #222; /* Cor de texto mais escura para inputs */
-    background-color: #f8f8f8; /* Fundo levemente cinza para inputs */
+#login-container h1 {
+  margin-bottom: 20px;
+  color: #fff;
 }
 
-.login-container button {
-    background-color: #007bff; /* Azul padrão, pode mudar para o verde da sua marca se quiser */
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 18px;
-    width: 100%;
-    transition: background-color 0.3s ease;
+#login-container label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+  color: #fff;
 }
 
-.login-container button:hover {
-    background-color: #0056b3;
+#login-container input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  color: #222;
 }
 
-.login-container button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
+#login-container button {
+  background-color: #c2db00;
+  color: #005d95;
+  font-weight: bold;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
 }
 
-.login-container .error {
-    color: red;
-    margin-top: 10px;
-    font-weight: bold;
+#login-container button:hover {
+  background-color: #a0b300;
 }
 
-.logo-login {
-    max-width: 250px; /* Aumentado para preencher mais o espaço da caixa */
-    height: auto; /* Mantém a proporção */
-    margin: 0 auto 25px auto; /* Centraliza horizontalmente e adiciona espaço abaixo */
-    display: block; /* Garante que 'margin: auto' funcione */
+#login-container .error {
+  color: #ff4d4d;
+  margin-top: 10px;
+  font-size: 0.9rem;
 }
-
-/* Se você tiver outros h1/h2 em outras páginas, considere usar IDs mais específicos */
-/* Estes estilos foram movidos para cá do HTML do login, pois eram específicos para ele */
-.login-container h1,
-.login-container h2 {
-    color: #005d95; /* Cor padrão para títulos dentro da caixa se for usá-los */
-}
-
-
-/* --- INÍCIO DOS ESTILOS DA PÁGINA PRINCIPAL (index.html) --- */
 
 /* Botão de logout */
 .logout-btn {
-    background-color: #db0000;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 15px;
-    cursor: pointer;
-    margin-bottom: 20px;
+  background-color: #db0000;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 15px;
+  cursor: pointer;
+  margin-bottom: 20px;
 }
 
 .logout-btn:hover {
-    background-color: #a80000;
+  background-color: #a80000;
 }
 
 /* Títulos */
 h1 {
-    font-size: 2.8rem;
-    font-weight: 700;
-    margin-bottom: 15px;
-    color: #fff;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #fff;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
 }
 
 h2 {
-    margin-top: 40px;
-    margin-bottom: 20px;
-    font-weight: 600;
-    color: #fff;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+  margin-top: 40px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
 }
 
 /* Tabs */
 .tabs {
-    margin-bottom: 20px;
-    display: flex;
-    gap: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
 }
 
 .tab-button {
-    background-color: #005d95;
-    border: none;
-    padding: 10px 25px;
-    border-radius: 8px;
-    color: #fff;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  background-color: #005d95;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .tab-button.active,
 .tab-button:hover {
-    background-color: #c2db00;
-    color: #005d95;
+  background-color: #c2db00;
+  color: #005d95;
 }
 
 .tab-content {
-    display: none;
-    width: 100%;
-    max-width: 900px;
+  display: none;
+  width: 100%;
+  max-width: 900px;
 }
 
 .tab-content.active {
-    display: block;
+  display: block;
 }
 
-/* --- ESTILOS PARA TODOS OS "CARDS" (Painéis azuis escuros) --- */
-.card {
-    background: rgba(0, 93, 149, 0.85); /* Seu azul escuro original com transparência */
-    color: #fff; /* Texto branco */
-    border-radius: 12px;
-    padding: 25px 30px;
-    box-shadow: 0 8px 15px rgba(0,0,0,0.25);
-    transition: transform 0.3s ease;
-    height: fit-content; /* Para cards de ranking e especificações */
+/* Container do formulário */
+.form-container {
+  background-color: rgba(0, 93, 149, 0.85); /* azul1 com transparência */
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.25);
+  width: 380px;
+  max-width: 100%;
 }
 
-/* Títulos dentro dos cards */
-.card h3 {
-    margin-bottom: 14px;
-    font-size: 1.4rem;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-    color: #fff; /* Garante títulos brancos */
+/* Labels */
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #fff;
+  font-size: 0.9rem;
 }
 
-/* Labels dentro dos cards */
-.card label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 6px;
-    color: #fff; /* Garante labels brancas */
-    font-size: 0.9rem;
+/* Inputs e selects */
+input[type="text"], select, input[type="date"], input[type="month"] { /* Adicionado input[type="month"] */
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: box-shadow 0.3s ease;
+  background-color: #eaf2a1;
+  color: #222;
 }
 
-/* Parágrafos e outros textos dentro dos cards */
-.card p,
-.card ul,
-.card li {
-    color: #fff; /* Garante texto branco */
+input[type="text"]:focus, select:focus, input[type="date"]:focus, input[type="month"]:focus { /* Adicionado input[type="month"] */
+  box-shadow: 0 0 8px #c2db00;
+  background-color: #fff;
 }
 
-/* Inputs e selects dentro dos cards */
-.card input[type="text"],
-.card select,
-.card input[type="date"],
-.card input[type="month"] {
-    width: 100%;
-    padding: 10px 14px;
-    margin-bottom: 18px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    outline: none;
-    transition: box-shadow 0.3s ease;
-    background-color: #eaf2a1; /* Fundo amarelo claro original */
-    color: #222; /* Texto escuro */
-}
-
-.card input[type="text"]:focus,
-.card select:focus,
-.card input[type="date"]:focus,
-.card input[type="month"]:focus {
-    box-shadow: 0 0 8px #c2db00;
-    background-color: #fff; /* Fundo branco ao focar */
-}
-
-/* Botão Salvar (dentro do card de formulário) */
+/* Botão Salvar */
 button#btnSalvar {
-    background-color: #c2db00;
-    color: #005d95;
-    font-weight: 700;
-    font-size: 1.1rem;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    box-shadow: 0 6px 10px rgba(194,219,0,0.8);
+  background-color: #c2db00;
+  color: #005d95;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-shadow: 0 6px 10px rgba(194,219,0,0.8);
 }
 
 button#btnSalvar:hover {
-    background-color: #a0b300;
-    color: #003e63;
-    box-shadow: 0 8px 14px rgba(160,179,0,1);
+  background-color: #a0b300;
+  color: #003e63;
+  box-shadow: 0 8px 14px rgba(160,179,0,1);
 }
 
-/* --- LAYOUT DA ABA CADASTRO (Flexbox para formulário e especificações) --- */
-.cadastro-flex-container {
-    display: flex;
-    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha em telas menores */
-    justify-content: center; /* Centraliza os itens horizontalmente */
-    gap: 20px; /* Espaçamento entre os itens flexíveis */
-    align-items: flex-start; /* Alinha os itens pelo topo */
-    width: 100%; /* Garante que o container ocupe a largura total do tab-content */
-    max-width: 900px; /* Limita a largura do container geral da aba */
+/* Container dos filtros */
+.filtros-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: center;
 }
 
-/* Estilo para os itens dentro do container flexível de cadastro */
-.form-container-flex-item {
-    flex: 1; /* Permite que os itens cresçam e ocupem o espaço disponível */
-    min-width: 300px; /* Garante que os cards não fiquem muito pequenos */
-    max-width: 45%; /* Limita o tamanho máximo para que fiquem lado a lado */
-    box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura */
+/* Cada grupo filtro + label */
+.filtro-grupo {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
 }
 
-/* === Botão de Ativar Seleção Múltipla === */
-/* Nova div para agrupar o select e o botão para o posicionamento da imagem 41 */
-.select-with-button-group {
-    display: flex;
-    align-items: center;
-    margin-bottom: 18px; /* Mantém o espaçamento para o próximo elemento */
-    gap: 8px; /* Espaço entre o select e o botão */
+/* Label dos filtros */
+.filtro-grupo label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #fff;
 }
 
-.select-with-button-group select {
-    flex-grow: 1; /* Permite que o select ocupe o máximo de espaço */
-    margin-bottom: 0; /* Remove a margem inferior original do select aqui para o grupo */
+/* Inputs e selects dos filtros */
+.filtro-grupo select,
+.filtro-grupo input[type="date"],
+.filtro-grupo input[type="month"], /* Adicionado input[type="month"] */
+.filtro-grupo input[type="text"] { /* Adicionado input[type="text"] para garantir estilo consistente */
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  background-color: #eaf2a1;
+  color: #222;
+  outline: none;
+  font-weight: 600;
+  transition: box-shadow 0.3s ease;
 }
 
+.filtros-container select:focus,
+.filtros-container input[type="date"]:focus,
+.filtros-container input[type="month"]:focus, /* Adicionado input[type="month"] */
+.filtros-container input[type="text"]:focus { /* Adicionado input[type="text"] */
+  box-shadow: 0 0 8px #c2db00;
+  background-color: #fff;
+}
+
+
+/* Botões de filtro (geral e PDF) - INCLUSÃO DO #btn-imprimir-selecionados AQUI */
+#btnFiltrar,
+#btnLimparFiltros,
+#btn-gerar-pdf,
+#btn-imprimir-selecionados { /* <<<< Adicionado AQUI! */
+  background-color: #c2db00;
+  color: #005d95;
+  font-weight: 700;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  white-space: nowrap; /* Impede quebra de linha */
+}
+
+#btnFiltrar:hover,
+#btnLimparFiltros:hover,
+#btn-gerar-pdf:hover,
+#btn-imprimir-selecionados:hover { /* <<<< Adicionado AQUI! */
+  background-color: #a0b300;
+}
+
+/* Estilo para botão desabilitado (importante para o botão de imprimir) */
+#btn-imprimir-selecionados:disabled {
+    background-color: #cccccc; /* Cor cinza para desabilitado */
+    color: #666666; /* Texto mais escuro para desabilitado */
+    cursor: not-allowed; /* Cursor de "não permitido" */
+    opacity: 0.7; /* Transparência para indicar desabilitado */
+    box-shadow: none; /* Sem sombra para desabilitado */
+}
+
+/* === NOVO ESTILO: Botão de Ativar Seleção Múltipla (MUITO MENOR, para não encostar) === */
 .btn-selecao-multipla {
-    background-color: #c2db00; /* Verde de destaque */
+    background-color: #c2db00; /* Usei a cor verde de destaque */
     color: #005d95; /* Texto azul para contraste */
     font-weight: 700;
     font-size: 0.65rem; /* MUITO REDUZIDO: Tamanho do texto */
     padding: 3px 5px; /* MUITO REDUZIDO: Preenchimento interno (altura e largura) */
     border: none;
-    border-radius: 4px;
+    border-radius: 4px; /* Ajustado para um botão minúsculo */
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     white-space: nowrap;
-    flex-shrink: 0; /* Impede que o botão encolha */
+    margin-left: 8px; /* Reduzida a margem lateral */
+    margin-top: 0; /* Certifica que não tem margem superior indesejada */
+    flex-shrink: 0;
     box-shadow: 0 0px 1px rgba(194, 219, 0, 0.15); /* Sombra quase imperceptível */
 }
 
 .btn-selecao-multipla:hover {
-    background-color: #a0b300;
-    box-shadow: 0 1px 2px rgba(160, 179, 0, 0.3);
+    background-color: #a0b300; /* Tom mais escuro de verde no hover */
+    box-shadow: 0 1px 2px rgba(160, 179, 0, 0.3); /* Sombra um pouco mais visível no hover */
 }
 
 .btn-selecao-multipla.active {
@@ -304,414 +313,269 @@ button#btnSalvar:hover {
 }
 
 
-/* --- LAYOUT DA ABA PAINEL --- */
-.filtros-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    align-items: flex-end; /* Alinha os botões e inputs na base */
-    margin-bottom: 20px;
-    justify-content: flex-start; /* Alinha filtros à esquerda */
-    width: 100%;
-    max-width: 900px;
+/* Painel de cartões */
+.container {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
 }
 
-.filtro-grupo {
-    display: flex;
-    flex-direction: column;
-    min-width: 150px;
+/* Cartões das máquinas */
+.card {
+  background: #005d95;
+  color: #fff;
+  border-radius: 14px;
+  padding: 25px 20px; /* VAI SER ALTERADO ABAIXO */
+  width: 270px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease;
 }
 
-.filtro-grupo label {
-    font-weight: 600;
-    margin-bottom: 5px;
-    color: #fff; /* Cor para labels dos filtros */
+.card:hover {
+  transform: scale(1.05);
 }
 
-.filtros-container select,
-.filtros-container input[type="date"],
-.filtros-container input[type="month"],
-.filtros-container input[type="text"] {
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: none;
-    font-size: 1rem;
-    background-color: #eaf2a1;
-    color: #222;
-    outline: none;
-    font-weight: 600;
-    transition: box-shadow 0.3s ease;
+.card h3 {
+  margin-bottom: 14px;
+  font-size: 1.4rem;
+  text-shadow: 1px 1px 3px #0008;
+  color: #fff;
 }
 
-.filtros-container select:focus,
-.filtros-container input[type="date"]:focus,
-.filtros-container input[type="month"]:focus,
-.filtros-container input[type="text"]:focus {
-    box-shadow: 0 0 8px #c2db00;
-    background-color: #fff;
+/* Status coloridos */
+.status {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-top: 12px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  width: fit-content;
+  user-select: none;
+  box-shadow: 0 0 6px rgba(0,0,0,0.3);
+  color: #fff;
 }
 
-/* Botões de filtro (geral e PDF) */
-#btnFiltrar,
-#btnLimparFiltros,
-#btn-gerar-pdf,
-#btn-imprimir-selecionados {
-    background-color: #c2db00;
-    color: #005d95;
-    font-weight: 700;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    white-space: nowrap; /* Impede quebra de linha */
-    margin-top: 5px; /* Para alinhar melhor com os inputs */
+.status.afazer {
+  background-color: #db0000; /* vermelho forte */
+  box-shadow: 0 0 10px #db0000aa;
 }
 
-#btnFiltrar:hover,
-#btnLimparFiltros:hover,
-#btn-gerar-pdf:hover,
-#btn-imprimir-selecionados:hover {
-    background-color: #a0b300;
+.status.andamento {
+  background-color: #db8b00; /* laranja forte */
+  box-shadow: 0 0 10px #db8b00aa;
 }
 
-#btn-imprimir-selecionados:disabled {
-    background-color: #cccccc;
-    color: #666666;
-    cursor: not-allowed;
-    opacity: 0.7;
-    box-shadow: none;
-}
-
-/* CONTAINER PARA A LISTA DE MANUTENÇÕES E O RANKING DO PAINEL */
-.panel-flex-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; /* Coloca lista à esquerda e ranking à direita */
-    gap: 20px;
-    align-items: flex-start;
-    margin-top: 20px;
-    width: 100%; /* Ocupa a largura total do tab-content */
-    max-width: 900px; /* Limita a largura do container geral da aba */
-}
-
-/* Lista de manutenções (cards individuais dentro) */
-.list-manutencoes-flex-item {
-    flex: 2; /* Ocupa 2/3 do espaço */
-    min-width: 450px; /* Garante tamanho mínimo */
-    box-sizing: border-box;
-    display: flex; /* Para que os cards de manutenção dentro dele fiquem em grid/flex */
-    flex-wrap: wrap;
-    gap: 20px; /* Espaçamento entre os cards individuais de manutenção */
-    justify-content: flex-start; /* Alinha os cards à esquerda */
-}
-
-/* Estilo para os CARTÕES INDIVIDUAIS de manutenção (dentro de #listaManutencoes) */
-.list-manutencoes-flex-item .card {
-    background: #005d95; /* Cor escura do seu card original */
-    color: #fff;
-    border-radius: 14px;
-    padding: 25px 20px;
-    width: 270px; /* Mantém largura fixa para os cards */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-    transition: transform 0.3s ease;
-    margin: 0; /* A margem entre eles é controlada pelo gap do pai */
-}
-
-.list-manutencoes-flex-item .card:hover {
-    transform: scale(1.05);
-}
-
-/* Estilo para cards que já foram impressos */
-.card.card-impresso {
-    opacity: 0.7;
-    border: 2px solid #c2db00;
-    background-color: rgba(0, 93, 149, 0.5);
-}
-
-.card.card-impresso .card-header h3 {
-    text-decoration: line-through;
-    color: #bbbbbb;
-}
-
-/* Ranking de Falhas Atuais no Painel */
-.ranking-flex-item {
-    flex: 1; /* Ocupa 1/3 do espaço */
-    min-width: 280px; /* Tamanho mínimo para o ranking */
-    max-width: 30%; /* Limita para não ficar muito largo */
-    box-sizing: border-box;
-}
-
-/* SLA: borda lateral colorida para indicar tempo */
-.sla-verde {
-    border-left: 5px solid #28a745; /* verde (SLA dentro do tempo) */
-}
-
-.sla-amarelo {
-    border-left: 5px solid #ffc107; /* amarelo (SLA próximo do limite) */
-}
-
-.sla-vermelho {
-    border-left: 5px solid #dc3545; /* vermelho (SLA estourado) */
-}
-
-.sla-timer {
-    font-weight: bold;
-    margin-top: 8px;
-    font-size: 0.95rem;
-    display: block;
-    color: #fff;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+.status.concluido {
+  background-color: #c2db00; /* verde da marca */
+  color: #005d95;
+  box-shadow: 0 0 10px #c2db00aa;
 }
 
 /* Dropdown para editar status */
 .status-select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 6px;
-    border-radius: 8px;
-    font-size: 1rem;
-    border: none;
-    background-color: #eaf2a1;
-    color: #222;
-    font-weight: 600;
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+  border-radius: 8px;
+  font-size: 1rem;
+  border: none;
+  background-color: #eaf2a1;
+  color: #222;
+  font-weight: 600;
 }
 
 .status-select:focus {
-    outline: none;
-    box-shadow: 0 0 8px #c2db00;
+  outline: none;
+  box-shadow: 0 0 8px #c2db00;
 }
 
-/* Botões de edição (dentro dos cards de manutenção) */
+/* Botões de edição */
 .botoes-edicao {
-    margin-top: 12px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
+  margin-top: 12px; /* VAI SER ALTERADO ABAIXO */
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 .botoes-edicao button {
-    padding: 8px 14px;
-    font-size: 0.9rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-    color: #fff; /* Cor de texto branco por padrão para botões dentro de cards azuis */
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
-.botoes-edicao button:first-child { /* Editar / Salvar */
-    background-color: #c2db00;
-    color: #005d95; /* Cor específica para o botão Editar */
+.botoes-edicao button:first-child {
+  background-color: #c2db00; /* verde */
+  color: #005d95;
 }
 
 .botoes-edicao button:first-child:hover {
-    background-color: #a0b300;
+  background-color: #a0b300;
 }
 
-.botoes-edicao button:last-child { /* Excluir/Cancelar */
-    background-color: #dc3545; /* Vermelho para excluir/cancelar */
+/* === ADIÇÃO PARA RANKING === */
+#ranking {
+  background-color: rgba(0, 93, 149, 0.85);
+  border-radius: 12px;
+  padding: 25px 30px;
+  color: #fff;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+  height: fit-content;
+  font-weight: 600;
+  user-select: none;
+  max-width: 280px;
+  margin-left: 10px;
 }
 
-.botoes-edicao button:last-child:hover {
-    background-color: #c82333;
+#ranking h3 {
+  margin-bottom: 15px;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #fff;
 }
 
-
-/* Status coloridos */
-.status {
-    font-weight: 700;
-    font-size: 1rem;
-    margin-top: 12px;
-    padding: 6px 12px;
-    border-radius: 20px;
-    width: fit-content;
-    user-select: none;
-    box-shadow: 0 0 6px rgba(0,0,0,0.3);
-    color: #fff;
+#ranking ol {
+  padding-left: 20px;
+  margin: 0;
 }
 
-.status.afazer {
-    background-color: #db0000;
-    box-shadow: 0 0 10px #db0000aa;
+#ranking li {
+  margin-bottom: 8px;
 }
 
-.status.andamento {
-    background-color: #db8b00;
-    box-shadow: 0 0 10px #db8b00aa;
+/* === NOVO ADICIONADO PARA #rankingMensal e alinhamento com #ranking === */
+#rankingMensal {
+  background-color: rgba(0, 93, 149, 0.85);
+  border-radius: 12px;
+  padding: 25px 30px;
+  color: #fff;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+  height: fit-content;
+  font-weight: 600;
+  user-select: none;
+  max-width: 280px;
+  margin-left: 10px;
+  margin-top: 20px; /* espaçamento vertical entre rankings */
 }
 
-.status.concluido {
-    background-color: #c2db00;
-    color: #005d95;
-    box-shadow: 0 0 10px #c2db00aa;
+#rankingMensal h3 {
+  margin-bottom: 15px;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #fff;
+}
+
+#rankingMensal ol {
+  padding-left: 20px;
+  margin: 0;
+}
+
+#rankingMensal li {
+  margin-bottom: 8px;
+}
+
+/* SLA: borda lateral colorida para indicar tempo */
+.sla-verde {
+  border-left: 5px solid #28a745; /* verde (SLA dentro do tempo) */
+}
+
+.sla-amarelo {
+  border-left: 5px solid #ffc107; /* amarelo (SLA próximo do limite) */
+}
+
+.sla-vermelho {
+  border-left: 5px solid #dc3545; /* vermelho (SLA estourado) */
+}
+
+.sla-timer {
+  font-weight: bold;
+  margin-top: 8px;
+  font-size: 0.95rem;
+  display: block;
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
 }
 
 /* Paginação */
 .paginacao {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin: 20px 0;
-    user-select: none;
-    max-width: 900px; /* Adicionado para consistência com outros containers */
-    margin: 25px auto 40px auto; /* Centraliza e adiciona margens */
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 20px 0;
+  user-select: none;
 }
 .paginacao button {
-    background-color: #005d95;
-    border: none;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 700;
+  background-color: #005d95;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 700;
 }
 .paginacao button.ativa {
-    background-color: #003f66;
+  background-color: #003f66;
 }
 .paginacao button.disabled {
-    background-color: #999;
-    cursor: default;
+  background-color: #999;
+  cursor: default;
 }
 
-/* --- LAYOUT DA ABA RELATÓRIOS --- */
-.relatorios-main-and-ranking-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 20px;
-    align-items: flex-start;
-    width: 100%; /* Ocupa a largura total do tab-content */
-    max-width: 900px; /* Limita a largura do container geral da aba */
-}
-
-.relatorios-main-content {
-    flex: 2; /* Conteúdo principal dos relatórios ocupa mais espaço */
-    min-width: 400px;
-    box-sizing: border-box;
-    /* Styles are now handled by the .card class */
-}
-
-.relatorios-main-content h2 {
-    color: #fff; /* Título dentro do card azul */
-    margin-top: 0; /* Remove margem superior extra se já é um card */
-}
-
-.relatorios-main-content .filtros-container label {
-    color: #fff; /* Labels dos filtros dentro do card azul */
-}
-
-.relatorio-message-center {
-    text-align: center;
-    margin-top: 30px;
-    color: #fff; /* Texto em fundo azul do relatorios-main-content */
-}
-
-
-.ranking-mensal-relatorio {
-    flex: 1; /* Ranking mensal ocupa menos espaço */
-    min-width: 280px;
-    max-width: 30%; /* Consistente com o ranking do painel */
-    box-sizing: border-box;
-    /* Styles are now handled by the .card class */
-}
-
-.filtro-ranking-mensal {
-    margin-bottom: 15px; /* Espaçamento abaixo do filtro de mês */
-}
-
-.filtro-ranking-mensal label {
-    color: #fff; /* Labels do filtro de ranking mensal */
-    font-weight: bold;
-}
-
-.filtro-ranking-mensal select {
-    padding: 5px;
-    border-radius: 5px;
-    border: none;
-    width: auto;
-    flex-grow: 1;
-    background-color: #eaf2a1;
-    color: #222;
-}
-
-/* Listas de ranking */
-#rankingLista,
-#rankingMensalLista {
-    padding-left: 20px;
-    margin-top: 0; /* Removendo margem superior duplicada */
-}
-
-/* --- MEDIA QUERIES PARA RESPONSIVIDADE --- */
-@media (max-width: 900px) {
-    /* Empilha os itens verticalmente em telas menores */
-    .cadastro-flex-container,
-    .panel-flex-container,
-    .relatorios-main-and-ranking-wrapper {
-        flex-direction: column;
-        align-items: stretch; /* Estica os itens para preencher a largura disponível */
-        justify-content: center;
-    }
-
-    /* Redefine larguras máximas para 100% em telas pequenas */
-    .form-container-flex-item,
-    .list-manutencoes-flex-item,
-    .ranking-flex-item,
-    .relatorios-main-content,
-    .ranking-mensal-relatorio {
-        max-width: 100%;
-        min-width: auto; /* Permite que ocupe a largura total */
-        margin: 10px auto; /* Centraliza e adiciona margem vertical */
-    }
-
-    /* Ajustes para os cards individuais dentro da lista de manutenção */
-    .list-manutencoes-flex-item .card {
-        width: 100%; /* Ocupa a largura total disponível no pai flexível */
-        max-width: 400px; /* Mas não excede um tamanho razoável */
-        margin: 0 auto; /* Centraliza os cards individualmente quando empilhados */
-    }
-
-    .filtros-container {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-    }
-
-    .filtro-grupo {
-        width: 100%;
-        min-width: auto;
-    }
-
+/* Responsivo */
+@media(max-width: 900px) {
+  #listaManutencoes {
+    justify-content: center !important;
+  }
+  #ranking, #rankingMensal {
+    max-width: 100% !important;
+    margin-top: 20px !important;
+    margin-left: 0 !important; /* Remove a margem lateral em telas menores */
+  }
+  .filtros-container {
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+  .cadastro-container {
+    flex-direction: column;
+  }
     /* Ajuste para o grupo do select e botão de seleção múltipla em telas menores */
-    .select-with-button-group { /* Usa a nova classe de grupo */
-        flex-direction: column; /* Coloca select e botão em coluna */
+    .cadastro-container .form-container > div {
+        flex-direction: column; /* Coloca label, select e botão em coluna */
         align-items: flex-start; /* Alinha à esquerda */
         width: 100%; /* Ocupa a largura total */
     }
-    .select-with-button-group select { /* Apenas o select dentro dessa div */
+    .cadastro-container .form-container > div > div { /* A div que envolve label e select */
         width: 100%; /* Garante que o select ocupe 100% da largura */
     }
-
-    .btn-selecao-multipla {
-        margin-left: 0; /* Remove a margem lateral em telas menores */
-        margin-top: 5px; /* Adiciona margem superior para separar do select */
-        width: 100%; /* Faz o botão ocupar a largura total */
-        font-size: 0.75rem; /* Reduzido o tamanho da fonte no responsivo */
-        padding: 4px 6px; /* Reduzido o preenchimento no responsivo */
-    }
+  .btn-selecao-multipla {
+    margin-left: 0; /* Remove a margem lateral em telas menores */
+    margin-top: 5px; /* Reduzido a margem superior no responsivo */
+    width: 100%; /* Faz o botão ocupar a largura total */
+    font-size: 0.75rem; /* Reduzido o tamanho da fonte no responsivo */
+    padding: 4px 6px; /* Reduzido o preenchimento no responsivo */
+  }
 }
 
-@media (max-width: 600px) {
-    .form-container-flex-item,
-    .card {
-        width: 95%; /* Ajusta a largura para telas muito pequenas */
-    }
-    .filtros-container {
-        justify-content: center;
-        gap: 10px;
-    }
-    .filtro-grupo {
-        min-width: 120px;
-    }
+@media(max-width: 600px) {
+  .form-container {
+    width: 95%;
+  }
+  .card {
+    width: 90%;
+  }
+  .filtros-container {
+    justify-content: center;
+    gap: 10px;
+  }
+  .filtro-grupo {
+    min-width: 120px;
+  }
 }
