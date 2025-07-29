@@ -8,6 +8,50 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Mantenha suas regras de estilo CSS aqui */
+        @media (max-width: 900px) {
+            #listaManutencoes {
+                justify-content: center !important;
+            }
+            #ranking, #rankingMensal { /* #rankingMensal foi movido, mas a regra ainda existe */
+                max-width: 100% !important;
+                margin-top: 20px !important;
+                margin-left: 0 !important; /* Adicionado para remover margem lateral em telas menores */
+            }
+            .filtros-container {
+                justify-content: center !important;
+                flex-wrap: wrap !important;
+                gap: 10px !important;
+            }
+            .cadastro-container {
+                flex-direction: column;
+            }
+        }
+        .paginacao {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 20px 0;
+            user-select: none;
+        }
+        .paginacao button {
+            background-color: #005d95;
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .paginacao button.ativa {
+            background-color: #003f66;
+        }
+        .paginacao button.disabled {
+            background-color: #999;
+            cursor: default;
+        }
+    </style>
 </head>
 <body>
     <button class="logout-btn" onclick="logout()">Sair</button>
@@ -24,16 +68,13 @@
     </div>
 
     <div id="cadastro" class="tab-content active">
-        <div class="cadastro-flex-container">
-            <div class="card form-container-flex-item">
-                <h3>Cadastro de Manutenção</h3>
+        <div class="cadastro-container" style="display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start;">
+            <div class="form-container" style="flex: 1; min-width: 280px;">
                 <label for="maquina">Selecione a máquina:</label>
-                <div class="select-with-button-group"> <select id="maquina">
-                        <option value="">-- Escolha --</option>
-                        <option value="Outros">Outros</option>
-                    </select>
-                    <button type="button" id="btnAtivarSelecaoMultipla" class="btn-selecao-multipla">Ativar Seleção Múltipla</button>
-                </div>
+                <button type="button" id="btnAtivarSelecaoMultipla" class="btn-selecao-multipla">Ativar Seleção Múltipla</button>
+                <select id="maquina">
+                    <option value="">-- Escolha --</option>
+                    <option value="Outros">Outros</option> </select>
 
                 <label for="problema">Problema:</label>
                 <input type="text" id="problema" placeholder="Descreva o problema" />
@@ -52,17 +93,16 @@
                 <button id="btnSalvar">Salvar</button>
             </div>
 
-            <div id="cardEspecificacoesCadastro" class="card form-container-flex-item">
+            <div id="cardEspecificacoesCadastro" class="form-container" style="flex: 1; min-width: 280px;">
                 <h3>Especificações da Máquina</h3>
                 <p>Selecione uma máquina para ver as especificações.</p>
-                <div id="especificacoesDisplay">
-                </div>
             </div>
         </div>
     </div>
 
     <div id="painel" class="tab-content">
-        <div class="filtros-container">
+
+        <div class="filtros-container" style="width: 100%; max-width: 900px; justify-content: flex-start;">
             <div class="filtro-grupo">
                 <label for="filtroTexto">Buscar por Texto:</label>
                 <input type="text" id="filtroTexto" placeholder="Digite uma máquina ou problema..." />
@@ -92,23 +132,25 @@
             <button id="btn-imprimir-selecionados" disabled>Imprimir Selecionados</button>
         </div>
 
-        <div class="panel-flex-container">
-            <div id="listaManutencoes" class="list-manutencoes-flex-item"></div>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+            <div id="listaManutencoes" style="flex: 3; display: flex; flex-wrap: wrap; gap: 20px; justify-content: flex-start;"></div>
 
-            <div id="ranking" class="card ranking-flex-item">
-                <h3>Ranking de Falhas Atuais</h3>
-                <ol id="rankingLista"></ol>
+            <div style="flex: 1; max-width: 280px;">
+                <div id="ranking" style="background-color: rgba(0, 93, 149, 0.85); border-radius: 12px; padding: 15px 20px; color: white; box-shadow: 0 8px 15px rgba(0,0,0,0.3); height: fit-content; font-weight: 600; user-select: none; margin-bottom: 15px;">
+                    <h3>Ranking de Falhas Atuais</h3>
+                    <ol id="rankingLista" style="padding-left: 20px;"></ol>
+                </div>
             </div>
         </div>
 
-        <div class="paginacao" aria-label="Paginação"></div>
+        <div class="paginacao" aria-label="Paginação" style="max-width: 900px; margin: 25px auto 40px auto;"></div>
     </div>
 
     <div id="relatorios" class="tab-content">
-        <div class="relatorios-main-and-ranking-wrapper">
-            <div class="card relatorios-main-content">
+        <div class="relatorios-content-wrapper" style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+            <div class="relatorios-main-content" style="flex: 3; min-width: 300px;">
                 <h2>Relatórios de Máquinas</h2>
-                <div class="filtros-container">
+                <div class="filtros-container" style="width: 100%; max-width: 900px; justify-content: flex-start;">
                     <div class="filtro-grupo">
                         <label for="filtro-mes-relatorio">Selecione o Mês e Ano:</label>
                         <input type="month" id="filtro-mes-relatorio">
@@ -117,22 +159,22 @@
                         <label for="filtro-maquina-relatorio">Selecione a Máquina:</label>
                         <select id="filtro-maquina-relatorio">
                             <option value="">-- Todas as Máquinas --</option>
-                        </select>
+                            </select>
                     </div>
                     <button id="btn-gerar-pdf">Gerar PDF</button>
                 </div>
-                <p class="relatorio-message-center">Selecione os filtros acima para gerar um relatório.</p>
+                <p style="text-align: center; margin-top: 30px; color: #666;">Selecione os filtros acima para gerar um relatório.</p>
             </div>
 
-            <div id="rankingMensal" class="card ranking-mensal-relatorio">
+            <div id="rankingMensal" style="flex: 1; max-width: 280px; background-color: rgba(0, 93, 149, 0.85); border-radius: 12px; padding: 15px 20px; color: white; box-shadow: 0 8px 15px rgba(0,0,0,0.3); height: fit-content; font-weight: 600; user-select: none;">
                 <h3>Ranking Mensal de Falhas</h3>
                 <div class="filtro-ranking-mensal">
-                    <label for="filtro-mes-ranking">Filtrar por Mês:</label>
-                    <select id="filtro-mes-ranking">
+                    <label for="filtro-mes-ranking" style="color: white; font-weight: bold;">Filtrar por Mês:</label>
+                    <select id="filtro-mes-ranking" style="padding: 5px; border-radius: 5px; border: none; width: auto; flex-grow: 1;">
                         <option value="">Selecione o Mês...</option>
                     </select>
                 </div>
-                <ol id="rankingMensalLista"></ol>
+                <ol id="rankingMensalLista" style="padding-left: 20px; margin-top: 15px;"></ol>
             </div>
         </div>
     </div>
