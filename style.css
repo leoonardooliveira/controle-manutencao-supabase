@@ -23,7 +23,7 @@ body {
   border-radius: 12px;
   box-shadow: 0 8px 15px rgba(0,0,0,0.3);
   text-align: center;
-  display: none; /* Este display: none é para o CONTAINER do login, não para a logo que está fora dele */
+  display: none; 
 }
 
 #login-container.active {
@@ -141,7 +141,7 @@ h2 {
 
 /* Container do formulário */
 .form-container {
-  background-color: rgba(0, 93, 149, 0.85); /* azul1 com transparência */
+  background-color: rgba(0, 93, 149, 0.85); 
   padding: 25px 30px;
   border-radius: 12px;
   box-shadow: 0 8px 15px rgba(0,0,0,0.25);
@@ -225,8 +225,8 @@ button#btnSalvar:hover {
 /* Inputs e selects dos filtros */
 .filtro-grupo select,
 .filtro-grupo input[type="date"],
-.filtro-grupo input[type="month"], /* Adicionado input[type="month"] */
-.filtro-grupo input[type="text"] { /* Adicionado input[type="text"] para garantir estilo consistente */
+.filtro-grupo input[type="month"], 
+.filtro-grupo input[type="text"] { 
   padding: 8px 10px;
   border-radius: 8px;
   border: none;
@@ -240,18 +240,18 @@ button#btnSalvar:hover {
 
 .filtros-container select:focus,
 .filtros-container input[type="date"]:focus,
-.filtros-container input[type="month"]:focus, /* Adicionado input[type="month"] */
-.filtros-container input[type="text"]:focus { /* Adicionado input[type="text"] */
+.filtros-container input[type="month"]:focus, 
+.filtros-container input[type="text"]:focus { 
   box-shadow: 0 0 8px #c2db00;
   background-color: #fff;
 }
 
 
-/* Botões de filtro (geral e PDF) - INCLUSÃO DO #btn-imprimir-selecionados AQUI */
+
 #btnFiltrar,
 #btnLimparFiltros,
 #btn-gerar-pdf,
-#btn-imprimir-selecionados { /* <<<< Adicionado AQUI! */
+#btn-imprimir-selecionados { 
   background-color: #c2db00;
   color: #005d95;
   font-weight: 700;
@@ -260,46 +260,46 @@ button#btnSalvar:hover {
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  white-space: nowrap; /* Impede quebra de linha */
+  white-space: nowrap; 
 }
 
 #btnFiltrar:hover,
 #btnLimparFiltros:hover,
 #btn-gerar-pdf:hover,
-#btn-imprimir-selecionados:hover { /* <<<< Adicionado AQUI! */
+#btn-imprimir-selecionados:hover { 
   background-color: #a0b300;
 }
 
-/* Estilo para botão desabilitado (importante para o botão de imprimir) */
+
 #btn-imprimir-selecionados:disabled {
-    background-color: #cccccc; /* Cor cinza para desabilitado */
-    color: #666666; /* Texto mais escuro para desabilitado */
-    cursor: not-allowed; /* Cursor de "não permitido" */
-    opacity: 0.7; /* Transparência para indicar desabilitado */
-    box-shadow: none; /* Sem sombra para desabilitado */
+    background-color: 
+    color: #666666;
+    cursor: not-allowed; 
+    opacity: 0.7; 
+    box-shadow: none; 
 }
 
-/* === NOVO ESTILO: Botão de Ativar Seleção Múltipla (MUITO MENOR, para não encostar) === */
+
 .btn-selecao-multipla {
     background-color: #c2db00; /* Usei a cor verde de destaque */
-    color: #005d95; /* Texto azul para contraste */
+    color: #005d95; 
     font-weight: 700;
-    font-size: 0.65rem; /* MUITO REDUZIDO: Tamanho do texto */
-    padding: 3px 5px; /* MUITO REDUZIDO: Preenchimento interno (altura e largura) */
+    font-size: 0.65rem; 
+    padding: 3px 5px; 
     border: none;
-    border-radius: 4px; /* Ajustado para um botão minúsculo */
+    border-radius: 4px; 
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     white-space: nowrap;
-    margin-left: 8px; /* Reduzida a margem lateral */
+    margin-left: 8px; 
     margin-top: 0; /* Certifica que não tem margem superior indesejada */
     flex-shrink: 0;
-    box-shadow: 0 0px 1px rgba(194, 219, 0, 0.15); /* Sombra quase imperceptível */
+    box-shadow: 0 0px 1px rgba(194, 219, 0, 0.15); 
 }
 
 .btn-selecao-multipla:hover {
-    background-color: #a0b300; /* Tom mais escuro de verde no hover */
-    box-shadow: 0 1px 2px rgba(160, 179, 0, 0.3); /* Sombra um pouco mais visível no hover */
+    background-color: #a0b300; 
+    box-shadow: 0 1px 2px rgba(160, 179, 0, 0.3); 
 }
 
 .btn-selecao-multipla.active {
@@ -329,7 +329,7 @@ button#btnSalvar:hover {
   background: #005d95;
   color: #fff;
   border-radius: 14px;
-  padding: 25px 20px; /* VAI SER ALTERADO ABAIXO */
+  padding: 25px 20px; 
   width: 270px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.25);
   transition: transform 0.3s ease;
@@ -360,22 +360,22 @@ button#btnSalvar:hover {
 }
 
 .status.afazer {
-  background-color: #db0000; /* vermelho forte */
+  background-color: #db0000; 
   box-shadow: 0 0 10px #db0000aa;
 }
 
 .status.andamento {
-  background-color: #db8b00; /* laranja forte */
+  background-color: #db8b00; 
   box-shadow: 0 0 10px #db8b00aa;
 }
 
 .status.concluido {
-  background-color: #c2db00; /* verde da marca */
+  background-color: #c2db00; 
   color: #005d95;
   box-shadow: 0 0 10px #c2db00aa;
 }
 
-/* Dropdown para editar status */
+/* Dropdown para editar status 
 .status-select {
   width: 100%;
   padding: 8px;
@@ -393,9 +393,9 @@ button#btnSalvar:hover {
   box-shadow: 0 0 8px #c2db00;
 }
 
-/* Botões de edição */
+
 .botoes-edicao {
-  margin-top: 12px; /* VAI SER ALTERADO ABAIXO */
+  margin-top: 12px; 
   display: flex;
   justify-content: flex-end;
   gap: 10px;
@@ -420,7 +420,7 @@ button#btnSalvar:hover {
   background-color: #a0b300;
 }
 
-/* === ADIÇÃO PARA RANKING === */
+
 #ranking {
   background-color: rgba(0, 93, 149, 0.85);
   border-radius: 12px;
@@ -450,7 +450,7 @@ button#btnSalvar:hover {
   margin-bottom: 8px;
 }
 
-/* === NOVO ADICIONADO PARA #rankingMensal e alinhamento com #ranking === */
+
 #rankingMensal {
   background-color: rgba(0, 93, 149, 0.85);
   border-radius: 12px;
@@ -481,17 +481,17 @@ button#btnSalvar:hover {
   margin-bottom: 8px;
 }
 
-/* SLA: borda lateral colorida para indicar tempo */
+
 .sla-verde {
-  border-left: 5px solid #28a745; /* verde (SLA dentro do tempo) */
+  border-left: 5px solid #28a745; 
 }
 
 .sla-amarelo {
-  border-left: 5px solid #ffc107; /* amarelo (SLA próximo do limite) */
+  border-left: 5px solid #ffc107; 
 }
 
 .sla-vermelho {
-  border-left: 5px solid #dc3545; /* vermelho (SLA estourado) */
+  border-left: 5px solid #dc3545; 
 }
 
 .sla-timer {
@@ -536,7 +536,7 @@ button#btnSalvar:hover {
   #ranking, #rankingMensal {
     max-width: 100% !important;
     margin-top: 20px !important;
-    margin-left: 0 !important; /* Remove a margem lateral em telas menores */
+    margin-left: 0 !important; 
   }
   .filtros-container {
     justify-content: center !important;
@@ -546,14 +546,14 @@ button#btnSalvar:hover {
   .cadastro-container {
     flex-direction: column;
   }
-    /* Ajuste para o grupo do select e botão de seleção múltipla em telas menores */
+    
     .cadastro-container .form-container > div {
-        flex-direction: column; /* Coloca label, select e botão em coluna */
-        align-items: flex-start; /* Alinha à esquerda */
-        width: 100%; /* Ocupa a largura total */
+        flex-direction: column; 
+        align-items: flex-start; 
+        width: 100%; 
     }
     .cadastro-container .form-container > div > div { /* A div que envolve label e select */
-        width: 100%; /* Garante que o select ocupe 100% da largura */
+        width: 100%; 
     }
   .btn-selecao-multipla {
     margin-left: 0; /* Remove a margem lateral em telas menores */
