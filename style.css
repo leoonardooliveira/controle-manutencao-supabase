@@ -7,6 +7,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Fundo gradiente azul - VERIFICADO E CORRIGIDO */
     background: linear-gradient(135deg, #0083c8 0%, #005d95 100%);
     min-height: 100vh;
     color: #fff; /* Cor do texto padrão do body (para elementos soltos, como o h1) */
@@ -140,7 +141,7 @@ h2 {
     width: 100%;
     max-width: 900px;
     /* Removi background-color e color aqui, pois os cards dentro terão seu próprio estilo */
-    /* Se você quiser um fundo CLARO para o tab-content que não são cards, adicione aqui */
+    /* Este container não deve ter fundo branco, os cards internos que terão o fundo azul escuro */
 }
 
 .tab-content.active {
@@ -248,6 +249,19 @@ button#btnSalvar:hover {
 }
 
 /* === Botão de Ativar Seleção Múltipla === */
+/* Nova div para agrupar o select e o botão para o posicionamento da imagem 41 */
+.select-with-button-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px; /* Mantém o espaçamento para o próximo elemento */
+    gap: 8px; /* Espaço entre o select e o botão */
+}
+
+.select-with-button-group select {
+    flex-grow: 1; /* Permite que o select ocupe o máximo de espaço */
+    margin-bottom: 0; /* Remove a margem inferior original do select aqui para o grupo */
+}
+
 .btn-selecao-multipla {
     background-color: #c2db00; /* Verde de destaque */
     color: #005d95; /* Texto azul para contraste */
@@ -259,7 +273,7 @@ button#btnSalvar:hover {
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     white-space: nowrap;
-    margin-left: 8px; /* Espaçamento do select */
+    /* margin-left: 8px; REMOVIDO: O gap do flexbox já fará isso */
     flex-shrink: 0; /* Impede que o botão encolha */
     box-shadow: 0 0px 1px rgba(194, 219, 0, 0.15); /* Sombra quase imperceptível */
 }
@@ -524,8 +538,32 @@ button#btnSalvar:hover {
     box-shadow: 0 0 10px #c2db00aa;
 }
 
-/* Paginação - Movida para o CSS externo para organização */
-/* Já presente no seu HTML em <style> */
+/* Paginação */
+.paginacao {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px 0;
+    user-select: none;
+    max-width: 900px; /* Adicionado para consistência com outros containers */
+    margin: 25px auto 40px auto; /* Centraliza e adiciona margens */
+}
+.paginacao button {
+    background-color: #005d95;
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 700;
+}
+.paginacao button.ativa {
+    background-color: #003f66;
+}
+.paginacao button.disabled {
+    background-color: #999;
+    cursor: default;
+}
 
 
 /* --- LAYOUT DA ABA RELATÓRIOS --- */
@@ -637,12 +675,12 @@ button#btnSalvar:hover {
     }
 
     /* Ajuste para o grupo do select e botão de seleção múltipla em telas menores */
-    .cadastro-flex-container .card > div { /* Seleciona a div que envolve select e button */
+    .select-with-button-group { /* Usa a nova classe de grupo */
         flex-direction: column; /* Coloca select e botão em coluna */
         align-items: flex-start; /* Alinha à esquerda */
         width: 100%; /* Ocupa a largura total */
     }
-    .cadastro-flex-container .card > div select { /* Apenas o select dentro dessa div */
+    .select-with-button-group select { /* Apenas o select dentro dessa div */
         width: 100%; /* Garante que o select ocupe 100% da largura */
     }
 
